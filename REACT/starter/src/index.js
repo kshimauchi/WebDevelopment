@@ -1,6 +1,10 @@
-import ReactDom from 'react';
 import React from 'react';
+import ReactDOM from 'react-dom';
 import App from './App';
 
-ReactDom.render(<div><App/></div>,document.querySelector('#root'));
-// Has two render twice: null, then after the state change
+ReactDOM.render(
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>,
+    document.getElementById('root')
+  );
