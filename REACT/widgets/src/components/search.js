@@ -1,20 +1,34 @@
 import React, {useEffect, useState} from 'react';
+import axios from 'axios';
 
-//debouncing the search
 const Search = () => {
-    const [term, setTerm] = useState('');
-    
-    //useEffect run every time here
-    console.log('I run with every render');
-    
+    // using process env: configuration is not using environments like (prod, qa, stage...dev)
+    // Note: we cannot use an async, await inside the useEffect hook 
+    const [term, setTerm] = useState('programming');
+    const [results, setResults] = useState([]);
+    // render when 1st rendered and anytime term changes
+    // Search wikipedia everytime a key is pressed, but we will debounce later
+    // on [term] change re-render the code, can't use aync and await inside useEffect
+    console.log(results);
     useEffect(()=> {
-        //when do we want this to be rendered the second argument
-        //controls
-        console.log('I run at initialization, and every render');
-    });
-    // ,[term], or [] runs at the initial, when re-rendered or if any
-    // element has changed 3 cases
-    //nothing, array, or whatever
+        //helper function
+        const search = async()=>{
+          const {data} = await axios.get(`${process.env.REACT_APP_API}`,{
+            params: {
+                action: 'query',
+                list:'search',
+                origin:'*',
+                format: 'json',
+                srsearch: term,
+            },
+        });
+        setResults(data.query.search);
+    };
+    
+        search();
+               
+    }, [term]);
+    
     return(
         <div>
         <div className="ui form">
