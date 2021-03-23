@@ -10,8 +10,8 @@ const Search = () => {
     useEffect(()=> {
         //when do we want this to be rendered the second argument
         //controls
-        console.log('I run only once');
-    },[]);
+        console.log('I run at initialization, and every render');
+    });
     // ,[term], or [] runs at the initial, when re-rendered or if any
     // element has changed 3 cases
     //nothing, array, or whatever
