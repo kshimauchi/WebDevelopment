@@ -2,14 +2,10 @@ import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 
 const Search = () => {
-    // using process env: configuration is not using environments like (prod, qa, stage...dev)
-    // Note: we cannot use an async, await inside the useEffect hook 
+    
     const [term, setTerm] = useState('programming');
     const [results, setResults] = useState([]);
-    // render when 1st rendered and anytime term changes
-    // Search wikipedia everytime a key is pressed, but we will debounce later
-    // on [term] change re-render the code, can't use aync and await inside useEffect
-    console.log(results);
+   
     useEffect(()=> {
         //helper function
         const search = async()=>{
@@ -24,11 +20,30 @@ const Search = () => {
         });
         setResults(data.query.search);
     };
+      search();
+        }, [term]);
     
-        search();
-               
-    }, [term]);
-    
+    const renderedResults = results.map( result=> {
+        return( 
+        <div key={result.pageid} className="item">
+            <div className="right floated content">
+                <a 
+                className="ui button"
+                href={`https://en.wikipedia.org?curid=${result.pageid}`}
+                >
+                Go
+                </a>
+            </div>
+            <div className="content">
+                <div className="header">
+                    {result.title}
+                </div>
+                <span dangerouslySetInnerHTML={{__html:result.snippet}}></span>
+            </div>
+            <hr color='silver' />
+        </div>
+        );
+    });
     return(
         <div>
         <div className="ui form">
@@ -38,10 +53,13 @@ const Search = () => {
                 className="input"
                 value ={term}
                 onChange={e=> setTerm(e.target.value)}
-
                 />
             </div>
         </div>
+        <div className="ui ceiled list">
+            {renderedResults}
+        </div>
+        
         </div>
     );
 };
