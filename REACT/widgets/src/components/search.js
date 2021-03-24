@@ -20,13 +20,22 @@ const Search = () => {
         });
         setResults(data.query.search);
     };
-    setTimeout(()=>{
+    if (term && !results.length){
+        //first render and search right away
+        search();
+    }else{
+    
+    const timeoutId = setTimeout(()=>{
         if(term) {  
             search();
         }
-    },500);
-    
-    }, [term]);
+    },1000);
+ 
+    return()=>{
+         clearTimeout(timeoutId);
+    };
+    }
+}, [term]);
     
     const renderedResults = results.map( result=> {
         return( 
