@@ -4,38 +4,41 @@ import axios from 'axios';
 const Search = () => {
     
     const [term, setTerm] = useState('programming');
+    //important change to grasp!
+    const [debouncedTerm, setdebouncedTerm] =useState(term);
     const [results, setResults] = useState([]);
-   
-    useEffect(()=> {
-        //helper function
-        const search = async()=>{
-          const {data} = await axios.get(`${process.env.REACT_APP_API}`,{
-            params: {
-                action: 'query',
-                list:'search',
-                origin:'*',
-                format: 'json',
-                srsearch: term,
-            },
-        });
-        setResults(data.query.search);
-    };
-    if (term && !results.length){
-        //first render and search right away
-        search();
-    }else{
     
-    const timeoutId = setTimeout(()=>{
-        if(term) {  
-            search();
+    //update term, setup timer to debounceTerm, if update
+    //we cancel the search
+    useEffect(()=>{
+        const timerId = setTimeout(()=>{
+            if(term){
+            setdebouncedTerm(term);
+            }
+        }, 1000);
+        return ()=>{
+            clearTimeout(timerId);
         }
-    },1000);
- 
-    return()=>{
-         clearTimeout(timeoutId);
-    };
-    }
-}, [term]);
+    }, [term]);
+    //Key: This will also render initially
+    useEffect(()=>{
+         //helper function
+         const search = async()=> {
+            const {data} = await axios.get(`${process.env.REACT_APP_API}`,{
+              params: {
+                  action: 'query',
+                  list:'search',
+                  origin:'*',
+                  format: 'json',
+                  srsearch: debouncedTerm,
+              },
+          });
+          setResults(data.query.search);
+      }
+      //search
+      search();
+
+    },[debouncedTerm]);
     
     const renderedResults = results.map( result=> {
         return( 
