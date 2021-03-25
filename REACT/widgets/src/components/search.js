@@ -4,12 +4,10 @@ import axios from 'axios';
 const Search = () => {
     
     const [term, setTerm] = useState('programming');
-    //important change to grasp!
     const [debouncedTerm, setdebouncedTerm] =useState(term);
     const [results, setResults] = useState([]);
     
     //update term, setup timer to debounceTerm, if update
-    //we cancel the search
     useEffect(()=>{
         const timerId = setTimeout(()=>{
             if(term){
@@ -20,7 +18,6 @@ const Search = () => {
             clearTimeout(timerId);
         }
     }, [term]);
-    //Key: This will also render initially
     useEffect(()=>{
          //helper function
          const search = async()=> {
