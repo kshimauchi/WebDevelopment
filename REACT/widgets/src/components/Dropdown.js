@@ -12,13 +12,20 @@ const Dropdown =  ({options, selected, onSelectedChange})=> {
     //event bubbling, what element was clicked and whether the element
     //was clicked was in the dropdown
     useEffect(()=>{
+        //assigned to top  element ui-form
         document.body.addEventListener('click',(event)=>{
             //tells what is contained in the dom component
+            // null with changes in app.js
+        
             if(ref.current.contains(event.target)){
                 return;
             }
             setOpen(false);
         });
+        //clean up function, or turn off the event listener
+        return () =>{
+            
+        };
     }, []);
 
 
