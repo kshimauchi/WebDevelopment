@@ -3,14 +3,8 @@ import {useState, useEffect,useRef} from 'react';
 const Dropdown =  ({options, selected, onSelectedChange})=> {
     
     const[open, setOpen] = useState(false);
-    const ref = useRef();  //reference to parent element ui-form
-    //one-time event listener
-    //we want it to close, but this remains open
-    //Body, item, dropdown click listener order
-    //all event which use body addEventListener are invoked first
-    //followed by the react event listeners from most child to most parent
-    //event bubbling, what element was clicked and whether the element
-    //was clicked was in the dropdown
+    const ref = useRef();  
+  
     useEffect(()=>{
         const onBodyClick = (event)=>{
             if(ref.current && ref.current.contains(event.target)){
@@ -18,9 +12,9 @@ const Dropdown =  ({options, selected, onSelectedChange})=> {
             }
             setOpen(false);
         };
-        //assigned to top  element ui-form
+        
             document.body.addEventListener('click',onBodyClick); 
-        //clean up function, or turn off the event listener
+     
         return () =>{
             document.body.removeEventListener('click', onBodyClick);    
         };
@@ -28,8 +22,7 @@ const Dropdown =  ({options, selected, onSelectedChange})=> {
 
 
     const renderedOptions = options.map((option)=>{
-        //Currently selected item will not be displayed
-        // as it returns null
+  
         if(option.value === selected.value){
             return null;
         }
@@ -66,3 +59,5 @@ const Dropdown =  ({options, selected, onSelectedChange})=> {
     );
 };
 export default Dropdown;
+
+//see comments on previous history for details
