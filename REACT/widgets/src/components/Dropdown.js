@@ -1,7 +1,27 @@
-import React,{useState} from 'react';
+import {useState, useEffect,useRef} from 'react';
 
 const Dropdown =  ({options, selected, onSelectedChange})=> {
+    
     const[open, setOpen] = useState(false);
+    const ref = useRef();  //reference to parent element ui-form
+    //one-time event listener
+    //we want it to close, but this remains open
+    //Body, item, dropdown click listener order
+    //all event which use body addEventListener are invoked first
+    //followed by the react event listeners from most child to most parent
+    //event bubbling, what element was clicked and whether the element
+    //was clicked was in the dropdown
+    useEffect(()=>{
+        document.body.addEventListener('click',(event)=>{
+            //tells what is contained in the dom component
+            if(ref.current.contains(event.target)){
+                return;
+            }
+            setOpen(false);
+        });
+    }, []);
+
+
     const renderedOptions = options.map((option)=>{
         //Currently selected item will not be displayed
         // as it returns null
@@ -18,8 +38,9 @@ const Dropdown =  ({options, selected, onSelectedChange})=> {
             </div>
         );
     });
+    
     return(
-        <div className="ui form">
+        <div ref={ref} className="ui form">
             <div className="field">
                 <label className="label">Select a Color</label>
             <div 
