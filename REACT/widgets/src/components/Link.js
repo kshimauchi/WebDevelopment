@@ -2,6 +2,10 @@ import React from 'react';
 
 const Link = ({className,href, children}) => {
     const onClick =(event)=>{
+        //patch for ctrl and cmd to open in new tab
+        if(event.metaKey || event.ctrlKey){
+            return;
+        }
         //step 1 no full page reload
         event.preventDefault();
         //step 2 only update the route on link update
