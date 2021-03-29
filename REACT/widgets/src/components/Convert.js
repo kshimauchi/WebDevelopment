@@ -42,9 +42,3 @@ const Convert =( {language, text} ) => {
     );
 };
 export default Convert;
-/*
-1) we will setup a timer when user types in text box
-2) if they pause for 500ms, we will useEffect and make the call
-3) if their is another update within 500ms we will cancel the timer
-
-*/
