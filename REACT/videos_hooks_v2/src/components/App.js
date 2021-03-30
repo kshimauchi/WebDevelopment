@@ -19,13 +19,16 @@ const App = ()=> {
                 q:term
             }
         });
-        //need to break up the setState into two autonomous calls for managing states
+       
         setdVideos(response.data.items);
         setSelectedVideo(response.data.items[0]);
     };
-    const onVideoSelect = (video)=> {
-        setSelectedVideo(video);
-    };
+    // since we are only calling this once, using inline function call below
+    // (video)=> setSelectedVideo(video) is equivalent to   onVideoSelect={ setSelectedVideo }
+    // in the video list
+    // const onVideoSelect = (video)=> {
+    //     setSelectedVideo(video);
+    // };
     return (
         <div className="ui-container">
             <SearchBar onFormSubmit={onTermSubmit}/>
@@ -36,7 +39,7 @@ const App = ()=> {
                     </div>
                     <div className="five wide column">
                         <VideoList 
-                        onVideoSelect={onVideoSelect} 
+                        onVideoSelect={ setSelectedVideo } 
                         videos={videos}
                         />
                     </div>
