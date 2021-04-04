@@ -1,37 +1,24 @@
 import React,{useState ,useEffect} from 'react';
-import youtube from '../apis/youtube';
 import SearchBar from './SearchBar';
 import VideoList from './VideoList';
 import VideoDetail from './videoDetail';
-//review the refactor
+import useVideos from '../hooks/useVideos';
+
+//review v1 versus v2 using hooks systems,
+
 const App = ()=> {
-    const [videos, setdVideos ] = useState([])
-    const [selectedVideo, setSelectedVideo]= useState(null);
+   const [selectedVideo, setSelectedVideo]=useState(null);
+   const [videos, search] = useVideos('Google Cloud Api\'s');
 
-    //didMount equivalent
-    useEffect(()=>{
-        onTermSubmit('Google Cloud APIs');
-    },[]);
+    useEffect(()=> {
 
-    const onTermSubmit = async term => {
-        const response = await youtube.get('/search', {
-            params:{
-                q:term
-            }
-        });
-       
-        setdVideos(response.data.items);
-        setSelectedVideo(response.data.items[0]);
-    };
-    // since we are only calling this once, using inline function call below
-    // (video)=> setSelectedVideo(video) is equivalent to   onVideoSelect={ setSelectedVideo }
-    // in the video list
-    // const onVideoSelect = (video)=> {
-    //     setSelectedVideo(video);
-    // };
+        setSelectedVideo(videos[0]);
+    
+    }, [videos]);
+   
     return (
         <div className="ui-container">
-            <SearchBar onFormSubmit={onTermSubmit}/>
+            <SearchBar onFormSubmit={search}/>
             <div className="ui grid" >
                 <div className="ui row">
                     <div className="eleven wide column">
