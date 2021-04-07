@@ -7,7 +7,9 @@
     "@testing-library/react": "^11.1.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-redux": "^7.2.3",
     "react-scripts": "4.0.3",
+    "redux": "^4.0.5",
     "web-vitals": "^1.0.1"
   },
   "scripts": {
@@ -35,6 +37,7 @@
     ]
   },
   "devDependencies": {
-    "@testing-library/user-event": "github:testing-library/user-event"
+    "@testing-library/user-event": "github:testing-library/user-event",
+    "redux-devtools": "^3.7.0"
   }
 }
