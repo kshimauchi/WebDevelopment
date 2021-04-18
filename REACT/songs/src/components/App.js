@@ -1,11 +1,9 @@
 import React from 'react';
 
-const App= ()=> {
-  return (
-    <div className="App">
-    App
-    </div>
-  );
-}
+//we will be using a functional component since redux
+const App = ()=> {
+  return (<div className="App">App</div>);
+
+};
 
 export default App;
