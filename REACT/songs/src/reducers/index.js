@@ -1,12 +1,12 @@
-import { combineReducer } from 'redux';
+import { combineReducers } from 'redux';
 
 const songsReducer = () =>{
     //only static here
     return [
         {   title: 'No Scrubs', duration: '4:05' },
-        {   title: 'The Chronic of Depression', duration: '2:30'},
-        {   title: 'Squilling people who need attention', duration: '3:54'},
-        {   title: 'Looks like used Needles',duration: '3:58'}
+        {   title: 'The Verve', duration: '4:34'},
+        {   title: 'Don\'t Speak', duration: '5:02'},
+        {   title: 'Everybody wants to rule the World',duration: '3:58'}
     ];
 };
 const selectedSongReducer = (selectedSong = null, action) =>{
@@ -16,7 +16,7 @@ const selectedSongReducer = (selectedSong = null, action) =>{
     return selectedSong;
 };
 
-combineReducer({
+export default combineReducers({
     songs: songsReducer,
     selectedSong: selectedSongReducer
 });
