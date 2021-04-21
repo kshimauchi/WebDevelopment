@@ -16,7 +16,7 @@ class PostList extends React.Component {
 };
 export default connect(null, 
     //sugar fetchPosts
-    {fetchPosts: fetchPosts}
+    {fetchPosts}
     )(PostList);
 /*  FLOW General data loading with Redux
 (1) Component gets rendered onto the screen
