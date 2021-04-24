@@ -14,15 +14,17 @@ class PostList extends React.Component {
             return(
                 <div className="item" key={post.id}>
                 <i className="large middle align icon user"/>
-                <div className="description"></div>
-                <h2>{post.title}</h2>
-                <p>{post.body}</p>
+                <div className="content">
+                    <div className="description">
+                        <h2>{post.title}</h2>
+                        <p>{post.body}</p> 
+                    </div>
                 </div>
+             </div>
             );
         });
     }
     render() {
-        
         return <div className="ui relaxed divided list">{this.renderList()}</div>;
     }
 }
