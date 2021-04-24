@@ -7,9 +7,23 @@ class PostList extends React.Component {
     componentDidMount(){
         this.props.fetchPosts();
     }
+// (3) creating a list for maping the response.data,
+// which is currently be console logged before
+    renderList(){
+        return this.props.posts.map(post =>{
+            return(
+                <div className="item" key={post.id}>
+                <i className="large middle align icon user"/>
+                <div className="description"></div>
+                <h2>{post.title}</h2>
+                <p>{post.body}</p>
+                </div>
+            );
+        });
+    }
     render() {
-        console.log(this.props.posts);
-        return <div>PostList</div>;
+        
+        return <div className="ui relaxed divided list">{this.renderList()}</div>;
     }
 }
 // (1) created mapstate to props
