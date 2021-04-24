@@ -3,31 +3,18 @@ import {connect} from 'react-redux';
 import {fetchPosts} from '../actions';
 
 class PostList extends React.Component {
-    
-    
-    componentDidCatch(){
+   
+    componentDidMount(){
         this.props.fetchPosts();
     }
-    render(){
-        return (
-            <div>PostList</div>
-        );
+    render() {
+        console.log(this.props.posts);
+        return <div>PostList</div>;
+    }
+}
+// (1) created mapstate to props
+    const mapStateToProps = (state)=>{
+        return { posts: state.posts };
     };
-};
-export default connect(null, 
-    //sugar fetchPosts
-    {fetchPosts}
-    )(PostList);
-/*  FLOW General data loading with Redux
-(1) Component gets rendered onto the screen
-(2) Components componentDidMount lifecycle method gets called 
-(3) We call action creator from componentDidMount
-[1-3] --Components are generally responsible for fetching data
-(4) Action creator runs code to make an API REQUEST
-(5) API responds with data
-(6) Action creator returns and action object with the fetched data on the 'payload' property
-[4-6] --Action Creators are responsible for making API requests / This is where Redux-Thunk comes in
-(7) some reducer see the action, returns the data off the 'payload'
-(8) Because we generate some new state object, react/react-redux cause our React app to rerendered
-[7-8] --We get fetched data into a component by generating a new state
-*/
+// (2) added mapstatetoprops, to the export
+export default connect(mapStateToProps,{fetchPosts})(PostList);
