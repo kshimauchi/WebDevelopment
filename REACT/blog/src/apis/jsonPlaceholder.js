@@ -1,5 +1,6 @@
 import axios from 'axios';
-//`${process.env.REACT_APP_URI}`
+// baseUrl, we will have multiple requests, and will be swapping the api endpoints 
+// as a means to ingest different response datas'
 export default axios.create({
-    baseURL: 'https://jsonplaceholder.typicode.com'
+    baseURL: `${process.env.REACT_APP_URI}`
 });
