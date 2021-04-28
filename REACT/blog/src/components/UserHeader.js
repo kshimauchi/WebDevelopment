@@ -1,33 +1,37 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { fetchUser } from '../actions';
-/*This is actually holding alot of data entire array of user
-but we are only rendering 10 at a time, think pagination
-*/
+
+// We should use less on this we want to show one user
+// (1) we could use renderList or
+// (2) move the find, to the mapStateToProps method
+//  removed the findById inside the render method and extracted it to 
+//  mapStateToProps, refactored the render method, for a single user
+//  on the props, 
 class UserHeader extends React.Component {
-//(4) create a didMount to fetch users with the same name
-// as we are using in the PostLists    
+    
     componentDidMount(){
         this.props.fetchUser(this.props.userId);
     }
-//(5) then we are going to search for a particular user
-// to map the blog post to a user as an author per say    
     render(){
-        //searching for a user on the state/props find the exact user
-        const user = this.props.users.find((user)=>user.id === this.props.userId);
-        //if there is no user for the blog we ignore it
+        const { user } = this.props;
+
         if(!user){
             return null;
         }
-
         return (
             <div className="header">{user.name}</div>
         );
     };
 }
-//(2)Map the state to the props so we can pass it around
-const mapStateToProps= (state)=>{
-    return {users:state.users};
+// we are going to alter this to make it reusable,
+// sometimes mapStateToProps and connect are seperate files
+// extracting the computation off the state
+// added ownProps argument, which has a reference to props,
+// redux state still on the first argument
+
+const mapStateToProps= (state, ownProps )=>{
+    return { user : state.users.find(user => user.id === ownProps.userId) };
 };
-//(3)add the map to state to the connect first arguments
+
 export default connect(mapStateToProps,{fetchUser})(UserHeader);
