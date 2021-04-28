@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { fetchUser } from '../actions';
+// import { fetchUser } from '../actions';
 
 //The problem with this, is its making to many request calls
 //for each individual user so can be seen in network xhr
@@ -8,9 +8,9 @@ import { fetchUser } from '../actions';
 //  memoized function will run a single time, unique arugments
 class UserHeader extends React.Component {
     
-    componentDidMount(){
-        this.props.fetchUser(this.props.userId);
-    }
+    // componentDidMount(){
+    //     this.props.fetchUser(this.props.userId);
+    // }
     render(){
         const { user } = this.props;
 
@@ -25,5 +25,5 @@ class UserHeader extends React.Component {
 const mapStateToProps= (state, ownProps )=>{
     return { user : state.users.find(user => user.id === ownProps.userId) };
 };
-
-export default connect(mapStateToProps,{fetchUser})(UserHeader);
+//removed the fetchUser
+export default connect(mapStateToProps)(UserHeader);

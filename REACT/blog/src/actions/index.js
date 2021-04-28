@@ -1,18 +1,19 @@
+import _ from 'lodash';
 import jsonPlaceholder from '../apis/jsonPlaceholder';
 
 // new method for fetchPostsAnUsers
-
-export const fetchPostsAndUsers = ()=> async dispatch => {
-    
-    //we need to call fetchPosts && fetchUsers
-    console.log('about to fetch posts!');
-    
-    // need to wait for api request to complete
+// thunk has a getState attached to its second argument and if we pass in
+// getState we can have access to it here
+export const fetchPostsAndUsers = ()=> async (dispatch, getState) => {
+    //getState exists on thunks second argument
     await dispatch(fetchPosts()); 
+   
+    const userIds = _.uniq(_.map(getState().posts, 'userId'))
+    console.log(userIds);
+                        
+    userIds.forEach(id=> dispatch(fetchUser(id)));
     
-    //dispatchs the inner function goes to redux thunk invokes
-    console.log('fetched posts!');
-    
+    userIds.map(id => dispatch(fetchUser(id)));
 };
 
 //We are going to memoize, an action creator
