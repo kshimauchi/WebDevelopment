@@ -4,12 +4,12 @@ import jsonPlaceholder from '../apis/jsonPlaceholder';
 export const fetchPostsAndUsers = ()=> async (dispatch, getState) => {
 
     await dispatch(fetchPosts()); 
-                                                // Lodash :
-    _.chain(getState().posts)                   // chain allows to chain on additional function on a collection of data
-        .map('userId')                          // gives us the map(arg1) whatever object we are chaining over, we want userId
-        .uniq()                                 // this result, we can chain onto, unique since we want unique userIds,
-        .forEach(id=> dispatch(fetchUser(id)))  // we call the function for every uniq Id
-        .value();                               // we simply call value(), so we can execute
+                                                
+    _.chain(getState().posts)                  
+        .map('userId')                          
+        .uniq()                                
+        .forEach(id=> dispatch(fetchUser(id)))  
+        .value();                               
 };
 
 export const fetchPosts = ()=> async dispatch => {
