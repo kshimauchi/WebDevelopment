@@ -1,7 +1,7 @@
 import {SIGN_IN, SIGN_OUT} from './types';
 
 // ActionCreators
-// We need two actions one for sign in, sign out
+// Edit and delete a stream by user 
 export const signIn= (userId)=>{
     return {
         type: SIGN_IN,

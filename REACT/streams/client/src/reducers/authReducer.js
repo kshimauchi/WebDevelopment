@@ -2,12 +2,13 @@
 import {SIGN_IN, SIGN_OUT} from '../actions/types';
 
 // Stream record and Id who created it
-// Google Auth
+// Stream association since we need the user to have the 
+// ability to edit the streams that they create
+
 const INTIAL_STATE = {
     isSignedIn: null,
     userId: null
 };
-
 
 export default (state= INTIAL_STATE , action) => {
     
