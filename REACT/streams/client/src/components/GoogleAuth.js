@@ -1,7 +1,11 @@
 import React from 'react';
 
 class GoogleAuth extends React.Component {
-
+    //we will have to move this state 
+    //and remove it to the redux store and
+    //pass this back as a prop from
+    //mapStateToProps which will spread the app
+    //logic,
     state = {isSignedIn: null};  
     
     componentDidMount(){
@@ -29,10 +33,10 @@ class GoogleAuth extends React.Component {
     onAuthChange= ()=>{
         this.setState({isSignedIn : this.auth.isSignedIn.get() });
     };
-    onSignIn = ()=>{
+    onSignInClick= ()=>{
         this.auth.signIn();
     }
-    onSignOut=()=>{
+    onSignOutClick=()=>{
         this.auth.signOut();
     }
 
@@ -43,7 +47,7 @@ class GoogleAuth extends React.Component {
 
         }else if(this.state.isSignedIn) {
             return(
-                <button onClick={this.onSignOut} className="ui red google button">
+                <button onClick={this.onSignOutClick} className="ui red google button">
                     <i className="google icon"/>
                      Sign Out from Google
                 </button>
@@ -51,7 +55,7 @@ class GoogleAuth extends React.Component {
 
         }else{
             return(
-                <button onClick={this.onSignIn} className="ui blue button">
+                <button onClick={this.onSignInClick} className="ui blue button">
                     <i className="google icon" />
                     Sign In with Google
                 </button>
