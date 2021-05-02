@@ -9,16 +9,12 @@ reduxForm, is a function similar to the connect function
 */
 //(3) wiring 
 class StreamCreate extends React.Component{
-    renderInput(formProps){
-        //needs to be a controlled element
-        /*
-                onChange={formProps.input.onChange}
-                value={formProps.input.value}
-        */
+    renderInput({input}){
+
         //console.log(formProps);
         return(
-            //adds them to input element as props using jsx
-            <input {...formProps.input} />
+          
+            <input {...input} />
         );
     }
     render() {
