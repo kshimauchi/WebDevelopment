@@ -16,9 +16,9 @@ class StreamCreate extends React.Component{
                 </div>
             </div>
         );
-       }
+    }
    }
-    renderInput = ( {input,label, meta })=> {
+   renderInput = ( {input,label, meta })=> {
         //console.log(meta);
         //context issue using this, undefined have to change to ()=>
         const className = `field ${meta.error && meta.touched ? 'error': ''}`;
