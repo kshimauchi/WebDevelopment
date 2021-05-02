@@ -6,7 +6,7 @@ class StreamCreate extends React.Component{
    
     // <div className="error">{meta.error}</div>
     // semantic ui disables errors by default, which we can add error on the className for the
-    // form
+    // form to enable
     renderError ({error, touched}){
        if(touched && error){
         return(
@@ -21,8 +21,10 @@ class StreamCreate extends React.Component{
     renderInput = ( {input,label, meta })=> {
         //console.log(meta);
         //context issue using this, undefined have to change to ()=>
+        const className = `field ${meta.error && meta.touched ? 'error': ''}`;
+
         return(     
-            <div className="field">
+            <div className={className}>
                 <label>{label}</label>
                 <input {...input} autoComplete="off"/>
                 {this.renderError(meta)}
@@ -48,7 +50,7 @@ class StreamCreate extends React.Component{
                     name="description" 
                     component={this.renderInput} 
                     label="Enter Description" 
-                     />
+                    />
                 <button className="ui button primary">Submit</button>
             </form>
         ); 
@@ -56,7 +58,7 @@ class StreamCreate extends React.Component{
 }
 //formsValues has all the values inside
 const validate = (formValues) =>{
-    //Map errors
+
     const errors = { };
     
     if(!formValues.title) {
