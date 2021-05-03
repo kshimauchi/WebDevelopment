@@ -10,9 +10,6 @@ import {
     EDIT_STREAM
 } from './types';
 
-// ActionCreators
-// (1) Added more types for action creators
-// (2) CRUD 
 export const signIn= (userId)=>{
     return {
         type: SIGN_IN,
