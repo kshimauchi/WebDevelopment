@@ -1,4 +1,4 @@
-import {SIGN_IN, SIGN_OUT} from './types';
+import {SIGN_IN, SIGN_OUT, CREATE_STREAM} from './types';
 import streams from '../apis/streams';
 
 // ActionCreators
@@ -14,9 +14,11 @@ export const signOut=()=>{
         type: SIGN_OUT
     };
 };
-//(1) just creating a new stream
-export const createStream = formValues=>  async dispatch=>{
 
-    streams.post('/streams', formValues);
+//(1) create stream with new id, and dispatching action...
+//(2) we need to follow restful conventions 
+export const createStream = formValues =>  async dispatch=>{
+    const response = await streams.post('/streams', formValues)
+    dispatch({type: CREATE_STREAM, payload: response.data });
 
 };
