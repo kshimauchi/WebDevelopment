@@ -24,8 +24,10 @@ export const signOut=()=>{
 //(1) create stream with new id, and dispatching action...
 //(2) we need to follow restful conventions
 //(3) Early drafts of action creators 
-export const createStream = formValues =>  async dispatch=>{
-    const response = await streams.post('/streams', formValues)
+//(4) We want to change the userId by using some nice library maybe
+export const createStream = formValues =>  async (dispatch, getState)=>{
+    const{ userId } = getState().auth;
+    const response = await streams.post('/streams', {...formValues,userId });
     dispatch({type: CREATE_STREAM, payload: response.data });
 };
 //Get a stream or streams we can use get

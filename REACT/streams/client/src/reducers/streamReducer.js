@@ -6,6 +6,8 @@ import {
     EDIT_STREAM,
     DELETE_STREAM
 } from '../actions/types';
+
+// FETCH_STREAMS: because we have lodash here we ill be mapping over this
 // Added fetch streams:
 // eslint-disable-next-line import/no-anonymous-default-export
 export default (state = {}, action) => {
