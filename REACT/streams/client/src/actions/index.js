@@ -41,10 +41,8 @@ export const fetchStream = (id) => async dispatch =>{
     const response = await streams.get(`/streams/${id}`);
     dispatch({type: FETCH_STREAM, payload: response.data});
 };
-// edit uses put
+// edit uses patch instead of userId,
 export const editStream = (id, formValues)=> async dispatch=>{
-    //put has a side effect, put will replace the the body
-    //swapped to patch request
     const response = await streams.patch(`/streams/${id}`, formValues);
     dispatch({type: EDIT_STREAM, payload: response.data});
     history.push('/');
