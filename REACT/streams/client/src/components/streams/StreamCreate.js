@@ -7,10 +7,7 @@ import {createStream} from '../../actions';
 //import '../../css/streams/streamStyles.css';
 
 class StreamCreate extends React.Component{
-   
-    // <div className="error">{meta.error}</div>
-    // semantic ui disables errors by default, which we can add error on the className for the
-    // form to enable
+ 
     renderError ({error, touched}){
        if(touched && error){
         return(
@@ -23,8 +20,7 @@ class StreamCreate extends React.Component{
     }
    }
    renderInput = ( {input, label, meta })=> {
-        //console.log(meta);
-        //context issue using this, undefined have to change to ()=>
+   
         const className = `field ${meta.error && meta.touched ? 'error': ''}`;
 
         return(     
@@ -39,7 +35,7 @@ class StreamCreate extends React.Component{
         this.props.createStream(formValues);
     }
     render() {
-        //console.log(this.props);
+      
         return(
             <form 
                 onSubmit={this.props.handleSubmit(this.onSubmit)} 

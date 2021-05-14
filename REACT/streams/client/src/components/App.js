@@ -8,9 +8,7 @@ import StreamShow from './streams/StreamShow';
 import Header from './Header';
 import history from '../history';
 
-//passed in history object as a property 
-//which internally is being managed by this application
-
+//updating routing rules
 const App = ()=> {
   return (
     <div className="ui container">
@@ -20,7 +18,7 @@ const App = ()=> {
       <Header/>
         <Route path="/" exact component={StreamList}/> 
         <Route path="/streams/new" component={StreamCreate} />
-        <Route path="/streams/edit" component={StreamEdit}/>
+        <Route path="/streams/edit/:id" component={StreamEdit}/>
         <Route path="/streams/delete" component={StreamDelete}/>
         <Route path="/streams/show" component={StreamShow}/>
       </div>  

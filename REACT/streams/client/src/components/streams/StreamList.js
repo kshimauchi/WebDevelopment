@@ -8,19 +8,18 @@ class StreamList extends React.Component {
     componentDidMount(){
         this.props.fetchStreams();
     }
+    //updating button to a Link,
     renderAdmin(stream) {
         if(stream.userId === this.props.currentUserId){
             return (
                 <div className="right floated content">
-                    <button className="ui button primary">Edit</button>
+                    <Link to={`/streams/edit/${stream.id}`} className="ui button primary">Edit</Link>
+                   
                     <button className="ui button negative">DELETE</button>
                 </div>
             ); 
         }
     }
-    // user button when user is logged in
-    // we can use the isSignedIn property from
-    // Redux store
     renderCreate(){
         if(this.props.isSignedIn){
             //need link here clean this up 
@@ -58,9 +57,7 @@ class StreamList extends React.Component {
         ); 
     }
 }
-//We turn the object to array to make it more mappable,
-//We do not need to keep using lodash
-//Object.values just takes an object and turns into array
+
 const mapStateToProps = (state)=>{
     return {
         streams: Object.values(state.streams),
