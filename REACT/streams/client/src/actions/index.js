@@ -1,4 +1,5 @@
 import streams from '../apis/streams';
+import history from '../history';
 
 import {
     SIGN_IN, 
@@ -21,14 +22,14 @@ export const signOut=()=>{
         type: SIGN_OUT
     };
 };
-//(1) create stream with new id, and dispatching action...
-//(2) we need to follow restful conventions
-//(3) Early drafts of action creators 
-//(4) We want to change the userId by using some nice library maybe
+
 export const createStream = formValues =>  async (dispatch, getState)=>{
     const{ userId } = getState().auth;
     const response = await streams.post('/streams', {...formValues,userId });
     dispatch({type: CREATE_STREAM, payload: response.data });
+    //Program user route back using navigation
+    history.push('/');
+
 };
 //Get a stream or streams we can use get
 export const fetchStreams = () => async dispatch =>{
