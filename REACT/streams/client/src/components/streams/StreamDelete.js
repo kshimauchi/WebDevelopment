@@ -7,7 +7,6 @@ const StreamDelete = ()=>{
             StreamDelete
             <Modal />
         </div>
-        
     );
 };
 export default StreamDelete;
