@@ -27,9 +27,8 @@ export const createStream = formValues =>  async (dispatch, getState)=>{
     const{ userId } = getState().auth;
     const response = await streams.post('/streams', {...formValues,userId });
     dispatch({type: CREATE_STREAM, payload: response.data });
-    //Program user route back using navigation
+  
     history.push('/');
-
 };
 //Get a stream or streams we can use get
 export const fetchStreams = () => async dispatch =>{
@@ -44,9 +43,11 @@ export const fetchStream = (id) => async dispatch =>{
 };
 // edit uses put
 export const editStream = (id, formValues)=> async dispatch=>{
-    
-    const response = await streams.put(`/streams/${id}`, formValues);
+    //put has a side effect, put will replace the the body
+    //swapped to patch request
+    const response = await streams.patch(`/streams/${id}`, formValues);
     dispatch({type: EDIT_STREAM, payload: response.data});
+    history.push('/');
 };
 // delete uses a delete 
 export const deleteStream = (id) =>  async dispatch=> {
