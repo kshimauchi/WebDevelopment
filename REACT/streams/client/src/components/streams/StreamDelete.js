@@ -8,7 +8,7 @@ import { fetchStream,deleteStream } from '../../actions';
 //making a class component
 
 class StreamDelete extends React.Component {
-    //fetch by using match.params.id or
+   
     
     componentDidMount(){
        this.props.fetchStream(this.props.match.params.id);
@@ -33,7 +33,7 @@ class StreamDelete extends React.Component {
         return `Are you want to delete the stream with title: ${this.props.stream.title}`;
     }
     render() {
-        //delay the title of the modal
+     
         
         return (
             <Modal 

@@ -22,7 +22,8 @@ class StreamList extends React.Component {
       );
     }
   }
-
+  //(1) wrap stream.title with link
+  //(2) we need to customize the path
   renderList() {
     return this.props.streams.map(stream => {
       return (
@@ -30,7 +31,11 @@ class StreamList extends React.Component {
           {this.renderAdmin(stream)}
           <i className="large middle aligned icon camera" />
           <div className="content">
-            {stream.title}
+            
+            <Link to={`/streams/${stream.id}`} className="header">
+              {stream.title}
+            </Link>
+
             <div className="description">{stream.description}</div>
           </div>
         </div>
