@@ -27,7 +27,6 @@ export const createStream = formValues =>  async (dispatch, getState)=>{
     const{ userId } = getState().auth;
     const response = await streams.post('/streams', {...formValues,userId });
     dispatch({type: CREATE_STREAM, payload: response.data });
-  
     history.push('/');
 };
 //Get a stream or streams we can use get
@@ -52,4 +51,5 @@ export const deleteStream = (id) =>  async dispatch=> {
    
     await streams.delete(`/streams/${id}`);
     dispatch({type: DELETE_STREAM, payload: id});
+    history.push('/');
 };
