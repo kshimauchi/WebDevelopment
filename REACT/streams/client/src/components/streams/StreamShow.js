@@ -2,7 +2,10 @@ import React from 'react';
 import flv from 'flv.js';
 import { connect} from 'react-redux';
 import { fetchStream } from '../../actions';
-
+/*Work on backend, when time permist
+serious limitation when any user can send any stream
+to the end point
+*/
 class StreamShow extends React.Component {
     
     constructor(props) {
@@ -11,14 +14,19 @@ class StreamShow extends React.Component {
         this.videoRef = React.createRef();
     }
     componentDidMount() {
-       
-        //console.log(this.videoRef);
+       //console.log(this.videoRef);
         this.props.fetchStream(this.props.match.params.id);
         this.buildPlayer();
     }
+    
     //alway attempt to build the player
     componentDidUpdate() {
         this.buildPlayer();
+    }
+    //clean up for videoPlayer resource
+    componentWillUnmount(){
+        console.log('un-mounted');
+        this.player.destroy();
     }
     //refactor, for not having access to the stream
     buildPlayer() {
