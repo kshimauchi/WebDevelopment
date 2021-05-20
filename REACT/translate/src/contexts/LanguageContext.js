@@ -2,4 +2,6 @@ import React from 'react';
 
 // default value english
 // strings, arrays, objects any data
-export default React.createContext('english');
+const context = React.createContext('english');
+
+export default context;

@@ -1,5 +1,6 @@
 import React from 'react';
 import UserCreate from './UserCreate';
+import LanguageContext from '../contexts/LanguageContext';
 
 class App extends React.Component {
     state = { language: 'english' };
@@ -12,20 +13,23 @@ class App extends React.Component {
             <div className="ui container">
                 <div>
                     Select a language :
-                     <i className="flag us" onClick={ ()=> this.onLanguageChange('english')}/>
-                     <i className="flag jp" onClick={ ()=> this.onLanguageChange('japanese')}/>
+                     <i className="flag us"
+                        onClick={() => this.onLanguageChange('english')}
+                    />
+                    <i className="flag jp"
+                        onClick={() => this.onLanguageChange('japanese')}
+                    />
                 </div>
-               <UserCreate/>
+                
+                <LanguageContext.Provider value={this.state.language}>
+                    <UserCreate/>
+                </LanguageContext.Provider>
+            
                  
             </div>
         );
     }
 }
 export default App;
-/*
-How do we get information in, and out of the context object
-We have sources of data, default value, or in the parent component we use a provider
-
-this.context, in nested child component or
-we create a consumer component
-*/
+//we will use provide to update values in the context
+//object
