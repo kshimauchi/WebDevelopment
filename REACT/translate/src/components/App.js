@@ -1,25 +1,23 @@
 import React from 'react';
 import UserCreate from './UserCreate';
-import LanguageContext from '../contexts/LanguageContext';
+import { LanguageStore} from '../contexts/LanguageContext';
 import ColorContext from '../contexts/ColorContext';
 import LanguageSeletor from './LanguageSelector';
 
+//we want to seperate business logic with view logic
+//easier done with redux, but this is a context system
 
 class App extends React.Component {
-    state = { language: 'english' };
-    
-    onLanguageChange = language => {
-        this.setState({ language });
-    }
+
     render() {
         return (
             <div className="ui container">
-                <LanguageSeletor onLanguageChange={this.onLanguageChange} />
-                <LanguageContext.Provider value={this.state.language}>
+               <LanguageStore>
+                <LanguageSeletor />
                     <ColorContext.Provider value="red">
                         <UserCreate />
                     </ColorContext.Provider>
-                </LanguageContext.Provider>
+                </LanguageStore>
             </div>
         );
     }

@@ -5,8 +5,9 @@ import ColorContext from '../contexts/ColorContext';
 class Button extends React.Component {
   //we use consumer approach when we have multiple contexts to get data from
   //Example: access multiple different context objects, need consumer approach
-    renderSubmit(value) {
-        return value === 'english' ? 'Submit' : 'Sanka suru';
+  
+    renderSubmit(language) {
+        return language === 'english' ? 'Submit' : 'Sanka suru';
     }
     renderButton(color) {
            return (
@@ -15,12 +16,11 @@ class Button extends React.Component {
                     <button
                         className={`ui button ${color}`}>
                         <LanguageContext.Consumer>
-                            {(value)=> this.renderSubmit(value)}
+                            {({language})=> this.renderSubmit(language)}
                         </LanguageContext.Consumer>
                     </button> 
                 }
             </ColorContext.Consumer>
-     
         );
     }
     render() {
