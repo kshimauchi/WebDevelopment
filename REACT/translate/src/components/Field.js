@@ -7,12 +7,11 @@ class Field extends React.Component {
     
     render() {
         const text = this.context === 'english' ? 'Name' : 'Namae';
-
         return (
-        <div className="ui field">
-                <label>{text}</label>
-                <input />
-        </div>  
+            <div className="ui field">
+                    <label>{text}</label>
+                    <input />
+            </div>  
         );
     }
 }
