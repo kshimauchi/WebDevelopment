@@ -72,6 +72,9 @@ typings/
 .env
 .env.test
 
+# Future update add, cloud run secret manager
+
+
 # parcel-bundler cache (https://parceljs.org/)
 .cache
 
