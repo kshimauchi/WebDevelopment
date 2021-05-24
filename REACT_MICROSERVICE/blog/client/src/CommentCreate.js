@@ -13,11 +13,11 @@ const CommentCreate = ({postId}) => {
 
         await axios.post(`http://localhost:4001/posts/${postId}/comments`, {
             content
-        
         });
         //clears the comment for visibility reuse
         setContent('');
     };
+    
     return (
     <div>
         <form onSubmit={onSubmit}>
