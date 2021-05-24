@@ -5,12 +5,9 @@ const cors = require('cors');
 
 const app = express();
 app.use(express.json());
-//added cors()
+
 app.use(cors());
-// we are looking for all posts by user
-// 'a3342fdsa' 
-// {id: 'kfjldajkjfd12', content:'infomative'}
-// in memory storage only there until server reboots
+
 const commentsByPostId = {};
 
 
@@ -34,22 +31,3 @@ app.post('/posts/:id/comments', (req, res) => {
 app.listen(4001, () => {
     console.log('Listening on 4001');
 });
-/*
-GET all posts by user, status 200
-localhost:4001/posts/123/comments
-[
-    {
-        "id": "409e8dfe",
-        "content": "this is a comment"
-    },
-    {
-        "id": "9d33756f",
-        "content": "this a second comment"
-    }
-]
-POST userId could be anything just an example
-localhost:4001/posts/123/comments
-{
-    "content": "this a second comment"
-}
-*/

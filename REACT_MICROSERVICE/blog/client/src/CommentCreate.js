@@ -12,7 +12,7 @@ const CommentCreate = ({postId}) => {
         event.preventDefault();
 
         await axios.post(`http://localhost:4001/posts/${postId}/comments`, {
-            content
+            content,
         });
       
         setContent('');
