@@ -1,7 +1,8 @@
 import React,{useState, useEffect} from 'react';
 import axios from 'axios';
-// eslint-disable-next-line import/no-anonymous-default-export
-export default () => {
+import CommentCreate from './CommentCreate';
+
+const PostList = () => {
 
     const [posts, setPosts] = useState({});
     
@@ -12,11 +13,11 @@ export default () => {
         setPosts(res.data);
     };
       
-    //Run this function a single time with the empty array
+  
     useEffect(() => {
         fetchPosts();
     }, []);
-    //Object.values returns an array
+    
     const renderedPosts = Object.values(posts).map(post => {
         return (
             <div
@@ -25,7 +26,8 @@ export default () => {
                 key={post.id}
             >
                 <div className="card-body">
-                <h3>{post.title}</h3>
+                    <h3>{post.title}</h3>
+                    <CommentCreate postId={post.id}/>
                 </div>
             </div>
         );
@@ -36,4 +38,5 @@ export default () => {
         </div>
     );
 };
+export default PostList;
 

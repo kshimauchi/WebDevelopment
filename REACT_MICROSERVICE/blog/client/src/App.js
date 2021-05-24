@@ -15,23 +15,3 @@ const App = () => {
     );
 };
 export default App;
-// export default () => {
-//     return <div>
-//         <h1>Create Post</h1>
-//         <PostCreate />
-//         <hr />
-//         <h1>Posts</h1>
-//         <PostList/>
-//     </div>;
-// };
-
-/*
-import React from "react";
- 
-const App = () => {
-  return <div>Blog app</div>;
-};
- 
-export default App;
-
-*/
