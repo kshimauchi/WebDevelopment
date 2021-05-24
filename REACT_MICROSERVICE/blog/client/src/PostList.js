@@ -4,26 +4,28 @@ import axios from 'axios';
 export default () => {
 
     const [posts, setPosts] = useState({});
-    //When first displayed we call this in useEffect
+    
     const fetchPosts = async () => {
+
         const res = await axios.get('http://localhost:4000/posts');
+        
         setPosts(res.data);
     };
       
-    //Run this function a single time
+    //Run this function a single time with the empty array
     useEffect(() => {
         fetchPosts();
     }, []);
-
-    const renderedPosts = Object.values(posts).map(posts => {
+    //Object.values returns an array
+    const renderedPosts = Object.values(posts).map(post => {
         return (
             <div
                 className="card"
                 style={{ width: '30%', marginBotom: '20px' }}
-                key={posts.id}
+                key={post.id}
             >
                 <div className="card-body">
-                <h3>{posts.title}</h3>
+                <h3>{post.title}</h3>
                 </div>
             </div>
         );
