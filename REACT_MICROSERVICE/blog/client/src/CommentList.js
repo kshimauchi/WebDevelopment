@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-// Managing its own data requirements
-// Comments microservice and fetch
-// postId from postlist to commentlist
+
 const CommentList = ({postId}) => {
     
-    //need a postId as a prop, the api gives us an array rather than obj
     const [comments, setComments] = useState([]);
     
     const fetchData = async () => {
