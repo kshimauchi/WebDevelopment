@@ -1,11 +1,12 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const { randomBytes } = require('crypto');
-
+const cors = require('cors');
 
 const app = express();
 app.use(express.json());
-
+//added cors()
+app.use(cors());
 // we are looking for all posts by user
 // 'a3342fdsa' 
 // {id: 'kfjldajkjfd12', content:'infomative'}

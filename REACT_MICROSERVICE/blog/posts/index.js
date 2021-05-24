@@ -1,13 +1,14 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const { randomBytes } = require('crypto');
-
+const cors = require('cors');
 
 const app = express();
 
 // app.use(bodyParser.json()); as of express 4.16+ we can replace this line
 app.use(express.json());
-
+// use for network request from 3000-> 4000
+app.use(cors());
 //object storage for the time being
 const posts = {};
 
