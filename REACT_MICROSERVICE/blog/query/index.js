@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const axios = require('axios');
 
 const app = express();
 app.use(bodyParser.json());
@@ -15,7 +16,12 @@ app.get('/posts', (req, res) => {
 app.post('/events', (req, res) => {
   const { type, data } = req.body;
 
-  //PostCreated event has an id and title
+  handleEvent(type, data);
+  
+  res.send({});
+});
+const handleEvent = (type, data) => {
+    //PostCreated event has an id and title
   if (type === 'PostCreated') {
     const { id, title } = data;
 
@@ -30,12 +36,35 @@ app.post('/events', (req, res) => {
    
     post.comments.push({ id, content, status });
   }
+  if (type === 'CommentUpdated') {
+    
+    const { id, content, postId, status } = data;
+    
+    const post = posts[postId];
 
-  console.log(posts);
-  
-  res.send({});
-});
-
-app.listen(4002, () => {
-  console.log('Listening on 4002');
+    const comment = post.comments.find(comment => {
+      
+      return comment.id === id;
+     
+    });
+    //Since we don't know what property was changed
+    //We directly change both
+    comment.status = status;
+    comment.content = content;
+  }
+}
+app.listen(4002, async () => {
+  console.log("Listening on 4002");
+  try {
+    // grab all the events from the event bus
+    const res = await axios.get("http://localhost:4005/events");
+ 
+    for (let event of res.data) {
+      console.log("Processing event:", event.type);
+ 
+      handleEvent(event.type, event.data);
+    }
+  } catch (error) {
+    console.log(error.message);
+  }
 });

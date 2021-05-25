@@ -21,9 +21,7 @@ app.post("/posts/:id/comments", async (req, res) => {
   const { content } = req.body;
 
   const comments = commentsByPostId[req.params.id] || [];
-  //(1) new property on the comment which is a status: default pending
-  //(2) goes to the event bus and will be sent to the query service, and moderation service
-  //(3) added status to the body of the what is sent to query service
+ 
   comments.push({ id: commentId, content, status: 'pending' });
 
   commentsByPostId[req.params.id] = comments;
@@ -37,13 +35,38 @@ app.post("/posts/:id/comments", async (req, res) => {
       status : 'pending'
     },
   });
-
   res.status(201).send(comments);
 });
 
-app.post("/events", (req, res) => {
+app.post("/events", async (req, res) => {
+  
   console.log("Event Received", req.body.type);
 
+  const { type, data } = req.body;
+  //if we receive a type of CommentModerated
+  if (type === 'CommentModerated') {
+    // we need to search through commentsByPostId
+    // and update the status
+    const { postId, id, status, content } = data;
+    const comments = commentsByPostId[postId];
+    const comment = comments.find(comment => {
+      // of event
+      return comment.id === id;
+    });
+    //we update from status
+    comment.status = status;
+    
+    //Now we need to tell the every service this emit commentService
+    await axios.post('http://localhost:4005/events', {
+      type: 'CommentUpdated',
+      data: {
+        id,
+        status,
+        postId,
+        content
+      }
+    })
+  }
   res.send({});
 });
 
