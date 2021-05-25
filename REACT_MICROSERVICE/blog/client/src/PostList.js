@@ -3,7 +3,6 @@ import axios from 'axios';
 import CommentCreate from './CommentCreate';
 import CommentList from './CommentList';
 
-//displaying the comments list here along with the comment create
 const PostList = () => {
 
     const [posts, setPosts] = useState({});
