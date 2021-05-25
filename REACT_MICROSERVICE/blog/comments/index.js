@@ -15,12 +15,16 @@ app.get("/posts/:id/comments", (req, res) => {
 });
 
 app.post("/posts/:id/comments", async (req, res) => {
+  
   const commentId = randomBytes(4).toString("hex");
+  
   const { content } = req.body;
 
   const comments = commentsByPostId[req.params.id] || [];
-
-  comments.push({ id: commentId, content });
+  //(1) new property on the comment which is a status: default pending
+  //(2) goes to the event bus and will be sent to the query service, and moderation service
+  //(3) added status to the body of the what is sent to query service
+  comments.push({ id: commentId, content, status: 'pending' });
 
   commentsByPostId[req.params.id] = comments;
 
@@ -30,6 +34,7 @@ app.post("/posts/:id/comments", async (req, res) => {
       id: commentId,
       content,
       postId: req.params.id,
+      status : 'pending'
     },
   });
 
