@@ -14,7 +14,8 @@ spec:
     spec:
       containers:
         - name: event-bus
-          image: kshimauchi/event-bus
+          image: containerizedockers/event-bus
+          imagePullPolicy: Never
 ---
 apiVersion: v1
 kind: Service
