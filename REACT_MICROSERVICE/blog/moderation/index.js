@@ -15,7 +15,7 @@ app.post('/events', async (req, res) => {
         const status = data.content.includes('blue') ? 'rejected' : 'approved';
 
         //we want to emit the commentModerated event to the event bus
-        await axios.post('http://localhost:4005/events', {
+        await axios.post('http://event-bus-srv:4005/events', {
             // the properties will be updated with status
             // for CommentModerated
             type: 'CommentModerated',
