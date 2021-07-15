@@ -1,5 +1,10 @@
 import mongoose from 'mongoose';
 
+//new user interface that describes
+interface userAttrs {
+    email: string,
+    password: string;
+}
 
 const userSchema = new mongoose.Schema({
     email: {
@@ -14,17 +19,20 @@ const userSchema = new mongoose.Schema({
 });
 
 const User = mongoose.model('User', userSchema);
+//typescript is not checking the type of arguments being
+//passed to the constructor
+//we can effectively add this method to do type checking
+const buildUser = (attrs: userAttrs) => {
+    return new User(attrs);
+};
 
-//Typescript doesnt have a clue
-// about these properties and arguments 
-// that are being passed to the constructor
-// we need to tell typescript about this
-// for a verification or validation
-// currently you could completely mangle this and 
-// typescript would just be happy joy joy
-new User({
+buildUser({
     email: 'test@test.com',
-    password: 'hfkdhsai'
+    password: 'password'
 });
-
-export { User };
+//error
+// buildUser({
+//     email: 'fd',
+//     password: 345
+// });
+export { User, buildUser };
