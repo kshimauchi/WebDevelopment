@@ -1,8 +1,7 @@
 import express, { Request, Response } from "express";
 import { body, validationResult } from "express-validator";
 import { RequestValidationError } from "../errors/request-validation-error";
-import { DatabaseConnectionError } from "../errors/database-connection-error";
-
+import { User } from '../models/user';
 const router = express.Router();
 
 router.post(
@@ -21,9 +20,22 @@ router.post(
             throw new RequestValidationError(errors.array());
         }
 
-        console.log("Creating a user...");
-        throw new DatabaseConnectionError();
-        res.send({});
+        const { email, password } = req.body;
+        const existingUser = await User.findOne({ email });
+
+        if (existingUser) {
+            console.log('Email in use');
+            return res.send({});
+        }
+        //password hashing here
+        // fix password being sent back in response, empty object
+        // if the user already exists
+
+        const user = User.build({ email, password });
+        //persist to mongo db
+        await user.save();
+        //upon success send back a response
+        res.status(201).send(user);
     }
 );
 
