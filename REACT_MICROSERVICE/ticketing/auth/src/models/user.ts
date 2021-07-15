@@ -1,15 +1,25 @@
 import mongoose from 'mongoose';
 
-//new user interface that describes
+//new user interface that describes a user
 interface userAttrs {
     email: string,
     password: string;
 }
+
 //new interface that describes the properties
-//that a User Model has
+//that a User Model has, replaced any with UserDoc
 interface UserModel extends mongoose.Model<any> {
-    build(attrs: userAttrs): any;
+    build(attrs: userAttrs): UserDoc;
 }
+
+//interface which will describe the properties
+//that the user documents creates
+interface UserDoc extends mongoose.Document {
+    email: string;
+    password: string;
+}
+
+
 const userSchema = new mongoose.Schema({
     email: {
         //typescript --> but in mongoose, it refers to constructor
@@ -21,34 +31,19 @@ const userSchema = new mongoose.Schema({
         required: true
     }
 });
-//custom function
-//we are going to add the buildUser for cleaner code
-//on the user model
+
 userSchema.statics.build = (attrs: userAttrs) => {
     return new User(attrs);
 };
 
-const User = mongoose.model<any, UserModel>('User', userSchema);
+const User = mongoose.model<UserDoc, UserModel>('User', userSchema);
 
-User.build({
-    email: 'test@test.com',
-    password: 'password'
-});
+// const user = User.build({
+//     email: 'test@test.com',
+//     password: 'afjkdaljfd'
+// });
+// user.email
+// user.password
+// user.createdAt  //would be added to the UserDoc
 
 export { User };
-/*
-<any>: any types can be changed or transformed,
-any could be of type string, number, boolean, null or undefined
-but always remains of type any,
-like
-let age: any = 25;
-age = true;
-in dealing with object types therefore we use the : syntax
-or property
-ninja = {name: 'yoshi', age: 25};
-console.log(ninja);
-
-this can be problematic within typescript as it increases
-error checking
-therefore use with caution
-*/
