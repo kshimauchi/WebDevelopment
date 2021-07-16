@@ -3,6 +3,8 @@ import { body, validationResult } from "express-validator";
 import { RequestValidationError } from "../errors/request-validation-error";
 import { User } from '../models/user';
 import { BadRequestError } from "../errors/bad-request-error";
+import jwt from 'jsonwebtoken';
+
 const router = express.Router();
 
 router.post(
@@ -25,17 +27,29 @@ router.post(
         const existingUser = await User.findOne({ email });
 
         if (existingUser) {
-            // console.log('Email in use');
-            // return res.send({});
             throw new BadRequestError('Email already in use!');
         }
-        //password hashing here
-        // fix password being sent back in response, empty object
-        // if the user already exists
+        //password hashing never store password in db in plain text
 
         const user = User.build({ email, password });
-        //persist to mongo db
+
+        //persist to mongodb
         await user.save();
+        //note that https:// needs to be added to post route in postman
+        //otherwise it will be ignored and a cookie will not be generated
+        //generate JWT id, email, password
+        const userJwt = jwt.sign({
+            id: user.id,
+            email: user.email
+        }, 'placeholder');
+
+        // Store on session object, the type definition installed
+        // req.session.jwt = userJwt;
+        // redefined
+        req.session = {
+            jwt: userJwt
+        };
+
         //upon success send back a response
         res.status(201).send(user);
     }

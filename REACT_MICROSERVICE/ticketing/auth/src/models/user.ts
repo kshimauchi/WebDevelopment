@@ -32,10 +32,12 @@ const userSchema = new mongoose.Schema({
         required: true
     }
 });
-//
+//hash the password 
 userSchema.pre('save', async function (done) {
     if (this.isModified('password')) {
+        //No plain text
         const hashed = await Password.toHash(this.get('password'));
+        //update db
         this.set('password', hashed);
     }
     done();
