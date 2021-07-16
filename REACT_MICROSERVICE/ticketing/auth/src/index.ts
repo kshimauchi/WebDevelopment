@@ -36,6 +36,10 @@ app.all("*", async (req, res) => {
 
 app.use(errorHandler);
 
+//capture jwt key error if not defined
+if (!process.env.JWT_KEY) {
+    throw new Error('JWT_KEY must be defined');
+}
 const start = async () => {
     //could be local but were using a cluster ip service
     try {

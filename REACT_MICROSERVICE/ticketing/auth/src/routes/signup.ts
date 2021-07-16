@@ -38,10 +38,15 @@ router.post(
         //note that https:// needs to be added to post route in postman
         //otherwise it will be ignored and a cookie will not be generated
         //generate JWT id, email, password
+
         const userJwt = jwt.sign({
             id: user.id,
             email: user.email
-        }, 'placeholder');
+        },
+            //already checked at app startup !
+            process.env.JWT_KEY!
+
+        );
 
         // Store on session object, the type definition installed
         // req.session.jwt = userJwt;
