@@ -1,14 +1,18 @@
 import mongoose from 'mongoose';
+
+import { Password } from '../services/password';
 // new user interface that describes a user
 interface userAttrs {
     email: string,
     password: string;
 }
+
 // new interface that describes the properties
 // that a User Model has, replaced any with UserDoc
 interface UserModel extends mongoose.Model<any> {
     build(attrs: userAttrs): UserDoc;
 }
+
 // interface which will describe the properties
 // that the user documents creates
 interface UserDoc extends mongoose.Document {
@@ -16,6 +20,7 @@ interface UserDoc extends mongoose.Document {
     password: string;
     //extra poperties for mongoose would go here
 }
+
 const userSchema = new mongoose.Schema({
     email: {
         //typescript --> but in mongoose, it refers to constructor
@@ -27,17 +32,20 @@ const userSchema = new mongoose.Schema({
         required: true
     }
 });
+//
+userSchema.pre('save', async function (done) {
+    if (this.isModified('password')) {
+        const hashed = await Password.toHash(this.get('password'));
+        this.set('password', hashed);
+    }
+    done();
+
+});
+
 userSchema.statics.build = (attrs: userAttrs) => {
     return new User(attrs);
 };
-const User = mongoose.model<UserDoc, UserModel>('User', userSchema);
 
-// const user = User.build({
-//     email: 'test@test.com',
-//     password: 'afjkdaljfd'
-// });
-// user.email
-// user.password
-// user.createdAt  //would be added to the UserDoc
+const User = mongoose.model<UserDoc, UserModel>('User', userSchema);
 
 export { User };
