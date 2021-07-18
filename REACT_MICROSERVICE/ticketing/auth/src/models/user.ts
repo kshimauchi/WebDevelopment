@@ -31,6 +31,19 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     }
+}, {
+    //documentToOjectOptions: transform toJSON a little different in mongoose
+    toJSON: {
+        //customizing response(s) json normally we do not do this 
+        //inside model file more a view responsibility
+        transform(doc, ret) {
+            //re-map the id field so we can multiple databases _id is for mongo
+            ret.id = ret._id;
+            delete ret.id;
+            delete ret.password;
+            delete ret.__v;
+        }
+    }
 });
 //hash the password 
 userSchema.pre('save', async function (done) {

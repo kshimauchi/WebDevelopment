@@ -50,14 +50,24 @@ router.post(
 
         // Store on session object, the type definition installed
         // req.session.jwt = userJwt;
-        // redefined
         req.session = {
             jwt: userJwt
         };
 
-        //upon success send back a response
         res.status(201).send(user);
     }
 );
 
 export { router as signupRouter };
+
+/*
+const person = {name: 'alex'}
+JSON.stringfy(person)
+
+overide the return
+const personTwo = { name: 'alex', toJSON(){return 1;}}
+JSON.stringify(personTwo);
+
+update model
+
+*/
