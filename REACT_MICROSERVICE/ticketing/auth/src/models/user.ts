@@ -39,7 +39,7 @@ const userSchema = new mongoose.Schema({
         transform(doc, ret) {
             //re-map the id field so we can multiple databases _id is for mongo
             ret.id = ret._id;
-            delete ret.id;
+            delete ret._id;
             delete ret.password;
             delete ret.__v;
         }
