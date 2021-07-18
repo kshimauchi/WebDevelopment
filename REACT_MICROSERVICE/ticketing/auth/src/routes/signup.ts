@@ -1,57 +1,47 @@
-import express, { Request, Response } from "express";
-import { body, validationResult } from "express-validator";
-import { RequestValidationError } from "../errors/request-validation-error";
-import { User } from '../models/user';
-import { BadRequestError } from "../errors/bad-request-error";
+import express, { Request, Response } from 'express';
+import { body } from 'express-validator';
 import jwt from 'jsonwebtoken';
+
+import { validateRequest } from '../middlewares/validate-request';
+import { User } from '../models/user';
+import { BadRequestError } from '../errors/bad-request-error';
 
 const router = express.Router();
 
 router.post(
-    "/api/users/signup",
+    '/api/users/signup',
     [
-        body("email").isEmail().withMessage("Email must be valid"),
-        body("password")
+        body('email').isEmail().withMessage('Email must be valid'),
+        body('password')
             .trim()
             .isLength({ min: 4, max: 20 })
-            .withMessage("Password must be between 4 and 20 characters"),
+            .withMessage('Password must be between 4 and 20 characters'),
     ],
+    validateRequest,
     async (req: Request, res: Response) => {
-        const errors = validationResult(req);
-
-        if (!errors.isEmpty()) {
-            throw new RequestValidationError(errors.array());
-        }
-
         const { email, password } = req.body;
+
         const existingUser = await User.findOne({ email });
 
         if (existingUser) {
-            throw new BadRequestError('Email already in use!');
+            throw new BadRequestError('Email in use');
         }
-        //password hashing never store password in db in plain text
 
         const user = User.build({ email, password });
-
-        //persist to mongodb
         await user.save();
-        //note that https:// needs to be added to post route in postman
-        //otherwise it will be ignored and a cookie will not be generated
-        //generate JWT id, email, password
 
-        const userJwt = jwt.sign({
-            id: user.id,
-            email: user.email
-        },
-            //already checked at app startup !
+        // Generate JWT
+        const userJwt = jwt.sign(
+            {
+                id: user.id,
+                email: user.email,
+            },
             process.env.JWT_KEY!
-
         );
 
-        // Store on session object, the type definition installed
-        // req.session.jwt = userJwt;
+        // Store it on session object
         req.session = {
-            jwt: userJwt
+            jwt: userJwt,
         };
 
         res.status(201).send(user);
@@ -59,15 +49,3 @@ router.post(
 );
 
 export { router as signupRouter };
-
-/*
-const person = {name: 'alex'}
-JSON.stringfy(person)
-
-overide the return
-const personTwo = { name: 'alex', toJSON(){return 1;}}
-JSON.stringify(personTwo);
-
-update model
-
-*/
