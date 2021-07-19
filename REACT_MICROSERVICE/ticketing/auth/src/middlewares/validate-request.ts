@@ -12,7 +12,6 @@ export const validateRequest = (
     if (!errors.isEmpty()) {
         throw new RequestValidationError(errors.array());
     }
-
     next();
 };
 
