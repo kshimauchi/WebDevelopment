@@ -1,6 +1,8 @@
 import request from 'supertest';
 import { app } from '../../app';
-
+//super test uses http://
+//we need to change the cookieSession,
+// secure property to be process.env.NODE_ENV !=='test
 it('returns a 201 on successful signup', async () => {
     return request(app)
         .post('/api/users/signup')
@@ -79,19 +81,5 @@ it('disallows duplicate emails', async () => {
         .expect(400);
 
 });
-// signup route handler
-// email not in use
-// create a user
-// create json web token
-// cookie session sets the information back on the middleware
-it('sets a cookie after successful signup', async () => {
-    const response = await request(app)
-        .post('/api/users/signup')
-        .send({
-            email: 'test@test.com',
-            password: 'password'
-        })
-        .expect(201);
-    expect(response.get('Set-Cookie')).toBeDefined();
 
-})
+
