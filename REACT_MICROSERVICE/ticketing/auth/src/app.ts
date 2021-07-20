@@ -22,8 +22,9 @@ app.use(
         //JWT Token is already encrypted
         //and in so doing would make encrypting and decrypting
         //more complicated if multiple languages are used on backend
+
         signed: false,
-        secure: true
+        secure: process.env.NODE_ENV !== 'test'
     })
 );
 app.use(currentUserRouter);
