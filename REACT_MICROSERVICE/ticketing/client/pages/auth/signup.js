@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import axios from 'axios';
+import Router from 'next/router';
 
 import useRequest from '../../hooks/use-request';
 
@@ -13,22 +13,23 @@ export default function authSignup() {
         method: 'post',
         body: {
             email, password
-        }
+        },
+        onSuccess: () => Router.push('/')
     });
     
     const onSubmit = async (event) => {
         event.preventDefault();
-        doRequest();
+        //(1) Option
+        // From use-request: we could re-throw the error
+        // so we have access here and use the await keyword to stop execution of the 
+        // programmatic routing to landing page
         
-    // try {
-    //     const response = await axios.post('/api/users/signup', {
-    //             email, password
-    //         });
-    //         console.log(response.data);
-    // } catch (err) {
-        
-    //         setErrors(err.response.data.errors);
-    // }
+        //(2) Option,
+        // Add variable to the use-request as destructured argument
+        // check if that argument is successful 
+        // and in the authSignUp function above, proceed with routing 
+        // if successful
+        await doRequest();
     };
     
     return (

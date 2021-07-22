@@ -2,16 +2,23 @@ import axios from 'axios';
 import { useState } from 'react';
 
 
-export default function doRequest({ url, method, body }) {
+export default function doRequest({ url, method, body, onSuccess }) {
     const [errors, setErrors] = useState(null);
     
     const doRequest = async() => {
         try {
             //clear previous error if any
             setErrors(null);
+            
             const response = await axios[method](url, body);
             
+            // for routing purposes to landing page on success
+            if (onSuccess) {
+                onSuccess(response.data);
+            }
+            
             return response.data;
+
         }catch (err){
             
             setErrors(
@@ -28,6 +35,8 @@ export default function doRequest({ url, method, body }) {
                 </ul>
             </div>
             );
+            //could throw err here if you wanted to
+            //await the doRequest
         }
     };
     return { doRequest, errors };
