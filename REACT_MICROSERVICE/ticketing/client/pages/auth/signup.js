@@ -35,13 +35,16 @@ export default function authSignup() {
     return (
         <form onSubmit={ onSubmit} >
             <h1>Sign Up</h1 >
+            
             <div className="form-group">
                 <label>Email Address</label>    
                 <input
                     value={email}
                     onChange={e => setEmail(e.target.value)}
                     className="form-control"
-                />
+                    placeholder="Enter email"
+            />
+                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
             </div>
             
             <div className="form-group">
@@ -51,12 +54,13 @@ export default function authSignup() {
                     value={password}
                     onChange={e => setPasword(e.target.value)}
                     className="form-control"
+                    placeholder="Enter password"
                 />
             </div>
             {errors}       
+            
             <button className="btn btn-primary">Sign up</button>
         </form>
-        
     );
 };
 
