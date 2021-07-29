@@ -9,7 +9,7 @@ export default function authSignup() {
     const [password, setPasword] = useState('');
     
     const { doRequest, errors } = useRequest({
-        url: '/api/users/signup',
+        url: '/api/users/signin',
         method: 'post',
         body: {
             email, password
@@ -19,22 +19,13 @@ export default function authSignup() {
     
     const onSubmit = async (event) => {
         event.preventDefault();
-        //(1) Option
-        // From use-request: we could re-throw the error
-        // so we have access here and use the await keyword to stop execution of the 
-        // programmatic routing to landing page
-        
-        //(2) Option,
-        // Add variable to the use-request as destructured argument
-        // check if that argument is successful 
-        // and in the authSignUp function above, proceed with routing 
-        // if successful
+  
         await doRequest();
     };
     
     return (
         <form onSubmit={ onSubmit} >
-            <h1>Sign Up</h1 >
+            <h1>Sign In</h1 >
             
             <div className="form-group">
                 <label>Email Address</label>    
@@ -44,7 +35,7 @@ export default function authSignup() {
                     className="form-control"
                     placeholder="Enter email"
             />
-                <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small>
+                
             </div>
             
             <div className="form-group">
@@ -59,7 +50,7 @@ export default function authSignup() {
             </div>
             {errors}       
             
-            <button className="btn btn-primary">Sign up</button>
+            <button className="btn btn-primary">Sign In</button>
         </form>
     );
 };
