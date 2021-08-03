@@ -26,3 +26,11 @@ build:
         manual:
           - src: "**/*.js"
             dest: .
+    - image: containerizedockers/tickets
+      context: auth
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "src/**/*.ts"
+            dest: .
