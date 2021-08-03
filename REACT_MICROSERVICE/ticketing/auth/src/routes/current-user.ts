@@ -1,7 +1,5 @@
 import express from 'express';
-
-import { currentUser } from '../middlewares/current-user';
-
+import { currentUser } from '@ticket-share/common';
 
 const router = express.Router();
 
@@ -13,5 +11,8 @@ router.get('/api/users/currentuser', currentUser, (req, res) => {
 export { router as currentUserRouter };
 
 /*
-Refactored the logic to a middleware for usability among other services
+Restructured:
+extracted errors and middleware to it's own npm package/module
+(1) corrected imports for the changes
+(2) 
 */
