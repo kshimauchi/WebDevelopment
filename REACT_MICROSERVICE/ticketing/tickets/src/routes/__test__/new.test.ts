@@ -1,6 +1,6 @@
 import request from 'supertest';
 import { app } from '../../app';
-
+import { Ticket } from '../../models/ticket';
 
 //Test Ticket: dir ticketing/tickets, ( npm run test )
 
@@ -69,16 +69,31 @@ it('returns an error if an invalid price is provided', async () => {
         .expect(400);
 });
         
-// add in a check to see if a ticket was saved to mongo 
-// we will need to build a model for mongoose typescript
-// similar to auth service
 it('creates a ticket with valid inputs', async () => {
+    //(1) We delete all records on db
+    //(2) This should fail fast
+    let tickets = await Ticket.find({});
+    expect(tickets.length).toEqual(0);
+
     await request(app)
         .post('/api/tickets')
+        .set('Cookie', global.signin())
         .send({
             title: 'Valid Ticket',
             price: 20,
         })
-        //needs model build for a ticket
         .expect(201);
+    
+    tickets = await Ticket.find({});
+    expect(tickets.length).toEqual(1);
+    expect(tickets[0].price).toEqual(20);
 });
+/*
+RESULT:
+  √ has a route handler listening to /api/tickets for post request (42 ms)
+  √ can only be accessed if the user is signed in (24 ms)
+  √ returns a status other 401 if the user is signed in (18 ms)
+  √ returns an error if an invalid title is provided (17 ms)
+  √ returns an error if an invalid price is provided (25 ms)
+  √ creates a ticket with valid inputs (33 ms)
+*/
