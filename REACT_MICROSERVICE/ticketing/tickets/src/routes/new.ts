@@ -22,13 +22,15 @@ router.post('/api/tickets', requireAuth, [
     //res.sendStatus(200);
     const { title, price } = req.body;
     
-    //current user is already set at this point
+    // current user is already set at this point
     // through middleware
+    // create a ticket for test
     const ticket = Ticket.build({
         title,
         price,
         userId: req.currentUser!.id
     });
+    // save to db
     await ticket.save();
 
     res.status(201)
