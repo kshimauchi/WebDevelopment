@@ -1,10 +1,16 @@
+import { Mongoose } from 'mongoose';
 import request from 'supertest';
 import { app } from '../../app';
-
+import mongoose from 'mongoose';
 
 it('returns 404 if the ticket is not found', async () => {
+    
+    //Simulated id of hex type as previous error was complaining 
+    //Before:  Error: Argument passed in must be a single String of 12 bytes or a string of 24 hex characters
+    const id = new mongoose.Types.ObjectId().toHexString();
+
     await request(app)
-        .get('/api/tickets/badticket')
+        .get(`/api/tickets/${id}`)
         .send()
         .expect(404);
 });
