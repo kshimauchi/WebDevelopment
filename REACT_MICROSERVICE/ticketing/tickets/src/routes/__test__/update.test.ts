@@ -39,7 +39,25 @@ it('returns 401 if the user is not authenticated', async () => {
 });
 
 it('returns 401 if the user does not own the ticket', async () => {
+    //changed the global signin, payload to randomize id
+    const response = await request(app)
+        .post('/api/tickets')
+        .set('Cookie', global.signin())
+        .send({
+            title: 'ticket',
+            price: 20
+        });
+    //then making second request should not have same id
+    await request(app)
+        .put(`/api/tickets/${response.body.id}`)
+        .set('Cookie', global.signin())
+        .send({
+            title: 'fdjkaljfdkla',
+            price: 1000
+        })
+        .expect(401);
     
+    //could verify the ticket title and price
 });
 
 it('returns 400 if the user provides an invalid title', async () => {
