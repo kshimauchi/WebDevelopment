@@ -29,7 +29,7 @@ it('returns the ticket if the ticket is found', async () => {
         .expect(201);
     
     const ticketResponse = await request(app)
-    .get(`/api/tickets/${response.body.id}`)
+        .get(`/api/tickets/${response.body.id}`)
     
     expect(ticketResponse.body.title).toEqual(title);
     expect(ticketResponse.body.price).toEqual(price);

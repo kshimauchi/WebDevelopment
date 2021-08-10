@@ -1,18 +1,18 @@
 import request from 'supertest';
 import { app } from '../../app';
 
+
 /* Access to all tickets no sign on is required */
 const createTicket = () => {
-    return (
-        request(app)
-            .post('/api/ticket')
-            .set('Cookie', global.signin())
-            .send({
-                title: 'fdafdsa',
-                price: 20
-            })
-    );
-}
+    return request(app)
+        .post('/api/tickets')
+        .set('Cookie', global.signin())
+        .send({
+            title: 'createdTicket',
+            price: 20
+        });
+
+};
 it('Can fetch a list of tickets', async () => {
     await createTicket(); 
     await createTicket();

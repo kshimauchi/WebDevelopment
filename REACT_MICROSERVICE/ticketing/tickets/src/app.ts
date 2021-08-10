@@ -6,6 +6,8 @@ import cookieSession from 'cookie-session';
 import { errorHandler, NotFoundError, currentUser } from "@ticket-share/common";
 import { createTicketRouter } from './routes/new';
 import { showTicketRouter } from './routes/show';
+import { indexTicketRouter } from './routes/index';
+
 //Configures app
 const app = express();
 //behind ingress engine and express needs to trust this
@@ -24,6 +26,7 @@ app.use(
 app.use(currentUser);
 app.use(createTicketRouter);
 app.use(showTicketRouter);
+app.use(indexTicketRouter);
 
 app.all("*", async (req, res) => {
     throw new NotFoundError();
