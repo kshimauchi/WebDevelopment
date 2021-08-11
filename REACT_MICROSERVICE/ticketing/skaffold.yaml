@@ -27,7 +27,7 @@ build:
           - src: "**/*.js"
             dest: .
     - image: containerizedockers/tickets
-      context: auth
+      context: tickets
       docker:
         dockerfile: Dockerfile
       sync:

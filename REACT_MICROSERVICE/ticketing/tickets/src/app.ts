@@ -16,15 +16,13 @@ app.set('trust proxy', true);
 app.use(json());
 
 app.use(
-    cookieSession({
-        //JWT Token is already encrypted
-        //and in so doing would make encrypting and decrypting
-        //more complicated if multiple languages are used on backend
-        signed: false,
-        secure: process.env.NODE_ENV !== 'test'
-    })
+  cookieSession({
+    signed: false,
+    secure: process.env.NODE_ENV !== 'test',
+  })
 );
 app.use(currentUser);
+
 app.use(createTicketRouter);
 app.use(showTicketRouter);
 app.use(indexTicketRouter);

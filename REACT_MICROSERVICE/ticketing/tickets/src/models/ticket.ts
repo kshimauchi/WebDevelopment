@@ -17,16 +17,16 @@ const ticketSchema = new mongoose.Schema({
     
     title: {
         type: String,
-        required: true
+        required: true,
     },
     price: {
         type: Number,
-        required: true
+        required: true,
     },
     userId: {
         type: String,
-        required: true
-    }
+        required: true,
+    },
 },  {
     toJSON: {
         transform(doc, ret) {
@@ -34,7 +34,7 @@ const ticketSchema = new mongoose.Schema({
             delete ret._id;
         },
     },
-    
+        
 });
 ticketSchema.statics.build = (attrs: TicketAttrs) => {
     return new Ticket(attrs);
