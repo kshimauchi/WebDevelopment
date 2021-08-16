@@ -1,13 +1,29 @@
 import { Message, Stan } from 'node-nats-streaming';
+import { Subjects } from './subjects';
 
-
-export abstract class Listener {
-   
-    abstract subject: string;
+// (2) Defining an event using interface, and that event will have a subject
+// (3) for an object to be considered and event it must
+// have a subject from Submject (a) subject 
+// and data from ticket-created interface (b) data
+// lastly we have an event and that event must contain both
+// a subject and data...
+interface Event {
+    subject: Subjects;
+    data: any;
+}
+// Generified using custom types
+// Event interface which takes a subject from Subjects
+// ticketCreatedEvent which defines a type definition for
+// The structure of the data associated
+export abstract class Listener<T extends Event> {
+    
+    abstract subject: T['subject'];
     abstract queueuGroupName: string;
+    
     private client: Stan;
     protected awkWait = 5 * 1000;
-    abstract onMessage(data: any, msg: Message): void;
+    // defined data in    
+    abstract onMessage(data: T['data'], msg: Message): void;
     
     constructor(client: Stan) {
         this.client = client;
