@@ -21,7 +21,7 @@ export class TicketCreatedListener extends Listener<TicketCreatedEvent>{
     console.log(data.title);
     console.log(data.price);
     
-    //(correctly)
+    //if all of this is fine then we acknowledge the message
     msg.ack();
     
    }
