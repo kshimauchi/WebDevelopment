@@ -2,6 +2,7 @@ import { Message } from 'node-nats-streaming';
 import { Listener } from './base-listener';
 
 export class TicketCreatedListener extends Listener {
+  
   subject = 'ticket:created';
   queueuGroupName = 'payments-service';
 
