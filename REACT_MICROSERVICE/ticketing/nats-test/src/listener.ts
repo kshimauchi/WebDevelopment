@@ -20,7 +20,8 @@ stan.on('connect', () => {
     //create instance and call listen
     new TicketCreatedListener(stan).listen();
 
-  });
+});
 
-process.on('SIGINT', () => stan.close());
-process.on('SIGTERM', () => stan.close());
+process.on('SIGINT', () =>  stan.close());
+process.on('SIGTERM', () =>  stan.close());
+
