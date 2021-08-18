@@ -4,12 +4,9 @@ import { app } from '../app';
 import request from 'supertest';
 
 
+
 declare global {
-    namespace NodeJS {
-        interface Global {
-            signin(): Promise<string[]>
-        }
-    }
+    var signin: () => Promise<string[]>;
 }
 
 let mongo: any;

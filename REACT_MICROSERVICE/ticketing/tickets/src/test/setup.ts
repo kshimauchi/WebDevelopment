@@ -4,13 +4,8 @@ import { app } from '../app';
 import request from 'supertest';
 import jwt from 'jsonwebtoken';
 
-
 declare global {
-    namespace NodeJS {
-        interface Global {
-            signin(): string[];
-        }
-    }
+    var signin: () => string[];
 }
 
 let mongo: any;
@@ -18,6 +13,7 @@ let mongo: any;
 beforeAll(async () => {
     
     process.env.JWT_KEY = 'placeholder';
+    process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
     mongo = await MongoMemoryServer.create();
     const mongoUri = await mongo.getUri();
 
@@ -54,8 +50,7 @@ global.signin = () => {
     // (4) Turn that session into JSON-
     const sessionJSON = JSON.stringify(session);
     // (5) Take JSON and encode it as base64
-    const base64 = Buffer.from(sessionJSON)
-        .toString('base64');
+    const base64 = Buffer.from(sessionJSON).toString('base64');
     // (6) return a string
     return [`express:sess=${base64}`];
     
