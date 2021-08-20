@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
 import { app } from './app';
-
+import { natsWrapper} from './nats-wrapper';
 
 
 const start = async () => {
@@ -16,13 +16,11 @@ const start = async () => {
         
         throw new Error('MONGO_URI must be defined');
     }
-    //(1) Security: generally speaking if we have defined a user, pass on the db
-    //              we should define, the hardcoded connection string inside the depl files 
-    //              as a secret just as we have defined the JWT secret
-    //              this is not really a big deal since we are inside a cluster here!
-
+    // (1) refactoring connect from nats-wraper
     try {
-        
+        //nats depl: args cid=ticketing, random str, and url service with port
+        await natsWrapper.connect('ticketing','blah', 'http://nats-srv:4222');
+
         await mongoose.connect( process.env.MONGO_URI, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
