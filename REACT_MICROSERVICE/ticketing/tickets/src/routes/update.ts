@@ -37,16 +37,15 @@ router.put(
       title: req.body.title,
       price: req.body.price,
     });
+
     await ticket.save();
-    //(1) endpoint https://ticketing.dev/api/tickets/{id} usage
-    // note you must be logged in and created a ticket cause we wipe
-    // db, also don't be confused here its a put request
+ 
     new TicketUpdatedPublisher(natsWrapper.client).publish({
         id: ticket.id,
         title: ticket.title,
         price: ticket.price,
         userId: ticket.userId,
-      });
+    });
    
 
     res.send(ticket);

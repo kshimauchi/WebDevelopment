@@ -18,6 +18,7 @@ router.post(
   ],
   validateRequest,
   async (req: Request, res: Response) => {
+    
     const { title, price } = req.body;
 
     const ticket = Ticket.build({
@@ -25,17 +26,16 @@ router.post(
       price,
       userId: req.currentUser!.id,
     });
+    
     await ticket.save();
 
-    // using a getter func(), and the property is defined on the instance
-    // if you try to access this prior to calling connect(), will throw an
-    // error
     await new TicketCreatedPublisher(natsWrapper.client).publish({
         id: ticket.id,
         title: ticket.title,
         price: ticket.price,
         userId: ticket.userId,
     });
+
     res.status(201).send(ticket);
   }
 );

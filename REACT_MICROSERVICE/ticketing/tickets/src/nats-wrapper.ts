@@ -16,7 +16,7 @@ class NatsWrapper {
     //(2) cluster id, client and other connection settings
     connect(clusterId: string, clientId: string, url: string) {
         this._client = nats.connect(clusterId, clientId, {url});
-    
+
     //(3) since we are sticking with async await syntax
         return new Promise<void>( (resolve, reject) => {
         this.client!.on('connect',()=>{
