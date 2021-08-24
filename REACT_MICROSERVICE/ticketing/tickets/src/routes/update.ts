@@ -8,7 +8,7 @@ import {
 } from '@ticket-share/common';
 import { Ticket } from '../models/ticket';
 import { TicketUpdatedPublisher } from '../events/publishers/ticket-updated-publisher';
-import {natsWrapper } from '../nats-wrapper';
+import { natsWrapper } from '../nats-wrapper';
 
 const router = express.Router();
 
@@ -37,16 +37,15 @@ router.put(
       title: req.body.title,
       price: req.body.price,
     });
-
     await ticket.save();
- 
+    // if this fails, no error is sent to user
+    // await adds latency
     new TicketUpdatedPublisher(natsWrapper.client).publish({
-        id: ticket.id,
-        title: ticket.title,
-        price: ticket.price,
-        userId: ticket.userId,
+      id: ticket.id,
+      title: ticket.title,
+      price: ticket.price,
+      userId: ticket.userId,
     });
-   
 
     res.send(ticket);
   }

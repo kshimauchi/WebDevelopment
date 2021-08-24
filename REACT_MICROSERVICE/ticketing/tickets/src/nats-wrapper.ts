@@ -1,32 +1,33 @@
 import nats, {Stan} from 'node-nats-streaming';
-
+// we don't want to run this while executing tests
+// so we will mock this
 class NatsWrapper {
-    //(1) create nats client assign to class
-    // maybe unassigned until we call the connect function
     private _client?: Stan;
-    
-    //(4) expose client
+   
     get client() {
         if(!this._client){
-            throw new Error('Cannot access NATS client before connection');
+            throw new Error('Cannot access NATS client before connecting');
         }
         return this._client;
     }
 
-    //(2) cluster id, client and other connection settings
     connect(clusterId: string, clientId: string, url: string) {
+        // client definition
         this._client = nats.connect(clusterId, clientId, {url});
 
-    //(3) since we are sticking with async await syntax
-        return new Promise<void>( (resolve, reject) => {
-        this.client!.on('connect',()=>{
-            console.log('Connect to NATS!!!');
-            resolve();
+
+        return new Promise<void>((resolve, reject) => {
+            this.client.on('connect', () => {
+                console.log('Connected to NATS');
+                resolve();
+            });
+
+            this.client.on('error', (err) => {
+                console.log('NATS connection REJECTED');
+                reject(err);
+            });
         });
-        this.client!.on('error',(err) => {
-            reject(err);
-        });
-    });
     }
 }
+// instance of a class 
 export const natsWrapper = new NatsWrapper();

@@ -1,4 +1,4 @@
-import { NotFoundError, RequestValidationError } from '@ticket-share/common';
+import { NotFoundError} from '@ticket-share/common';
 import express, { Request, Response } from 'express'
 import { Ticket } from '../models/ticket';
 

@@ -1,5 +1,3 @@
-import cookieSession from 'cookie-session';
-import { response } from 'express';
 import request from 'supertest';
 import { app } from '../../app';
 

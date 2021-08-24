@@ -1,7 +1,6 @@
 import mongoose from 'mongoose';
-
 import { app } from './app';
-import { natsWrapper} from './nats-wrapper';
+import { natsWrapper } from './nats-wrapper';
 
 
 const start = async () => {
@@ -15,14 +14,13 @@ const start = async () => {
     }
     
     try {
-        await natsWrapper.connect('ticketing','blah', 'http://nats-srv:4222');
-        //(1) new natsWrapper client:      
+        await natsWrapper.connect('ticketing','bazooka', 'http://nats-srv:4222');
+            
         natsWrapper.client.on('close', () => {
             console.log('NATS connection closed!');
             process.exit();
         });    
-        //(2) handle grafully which is fine on linux at the moment
-
+     
         process.on('SIGINT', () =>  natsWrapper.client.close());
         process.on('SIGTERM', () => natsWrapper.client.close());
            

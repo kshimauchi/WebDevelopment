@@ -1,21 +1,35 @@
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import mongoose from 'mongoose';
-import { app } from '../app';
-import request from 'supertest';
 import jwt from 'jsonwebtoken';
 
+//  "noImplicitAny": false.
+// declare global {
+//     namespace NodeJS {
+//         interface Global {
+//             signin(): string[];
+//         }
+//     }
+// }
+// declare var global: typeof globalThis;
+// mocking file, from __mocks__
+// declare module globalThis {
+//     function signup(): string[];
+// }
+// declare global {
+//     function signin(_id?: string): string[];
+// }
 declare global {
-    var signin: () => string[];
+    var signin: () => string;
 }
-//mocking file, from __mocks__
-jest.mock('../nats-wrapper.ts');
+
+jest.mock('../nats-wrapper');
 
 let mongo: any;
  
 beforeAll(async () => {
     
     process.env.JWT_KEY = 'placeholder';
-    process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+   //process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
     mongo = await MongoMemoryServer.create();
     const mongoUri = await mongo.getUri();
 
@@ -43,7 +57,7 @@ afterAll(async () => {
 
 //fabricating a signin...
 global.signin = () => {
-    // (1) build JWT payload. { id, email}
+     // (1) build JWT payload. { id, email}
     const payload = {
         id: new mongoose.Types.ObjectId().toHexString(),
         email: 'test@test.com'
@@ -57,6 +71,5 @@ global.signin = () => {
     // (5) Take JSON and encode it as base64
     const base64 = Buffer.from(sessionJSON).toString('base64');
     // (6) return a string
-    return [`express:sess=${base64}`];
-    
-};
+    return `express:sess=${base64}`;
+ };
