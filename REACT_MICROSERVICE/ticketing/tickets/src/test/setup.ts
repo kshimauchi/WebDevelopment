@@ -19,7 +19,7 @@ import jwt from 'jsonwebtoken';
 //     function signin(_id?: string): string[];
 // }
 declare global {
-    var signin: () => string;
+    var signin: () => string[];
 }
 
 jest.mock('../nats-wrapper');
@@ -29,7 +29,7 @@ let mongo: any;
 beforeAll(async () => {
     
     process.env.JWT_KEY = 'placeholder';
-   //process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+    process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
     mongo = await MongoMemoryServer.create();
     const mongoUri = await mongo.getUri();
 
@@ -40,7 +40,7 @@ beforeAll(async () => {
 });
 
 beforeEach(async () => {
-    
+    //clears mocks
     jest.clearAllMocks();
 
     const collections = await mongoose.connection.db.collections();
@@ -71,5 +71,5 @@ global.signin = () => {
     // (5) Take JSON and encode it as base64
     const base64 = Buffer.from(sessionJSON).toString('base64');
     // (6) return a string
-    return `express:sess=${base64}`;
+    return [`express:sess=${base64}`];
  };

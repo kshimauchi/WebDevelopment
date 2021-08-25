@@ -23,7 +23,7 @@ class NatsWrapper {
             });
 
             this.client.on('error', (err) => {
-                console.log('NATS connection REJECTED');
+                console.log('NATS Connect REJECTED');
                 reject(err);
             });
         });
