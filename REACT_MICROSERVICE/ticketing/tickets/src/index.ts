@@ -9,12 +9,26 @@ const start = async () => {
         throw new Error('JWT_KEY must be defined');
     }
     
-    if (!process.env.MONGO_URI) {
+    if ( !process.env.MONGO_URI ) {
         throw new Error('MONGO_URI must be defined');
     }
-    
+    if ( !process.env.NATS_CLIENT_ID ){
+        throw new Error('NATS_CLIENT_ID must be defined ');
+    }
+    if ( !process.env.NATS_URL ){
+        throw new Error('NATS_URL must be defined');
+    }
+    if ( !process.env.NATS_CLUSTER_ID ) {
+        throw new Error('NATS_CLUSTER_ID must be defined');
+    }
+
     try {
-        await natsWrapper.connect('ticketing','bazooka', 'http://nats-srv:4222');
+        //moved to deployment
+        await natsWrapper.connect(
+            process.env.NATS_CLUSTER_ID,
+            process.env.NATS_CLIENT_ID, 
+            process.env.NATS_URL
+        );
             
         natsWrapper.client.on('close', () => {
             console.log('NATS connection closed!');

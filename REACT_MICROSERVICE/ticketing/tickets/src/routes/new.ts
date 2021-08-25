@@ -37,5 +37,4 @@ router.post(
     res.status(201).send(ticket);
   }
 );
-
 export { router as createTicketRouter };

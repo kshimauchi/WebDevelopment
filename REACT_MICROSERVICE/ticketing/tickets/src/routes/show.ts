@@ -1,6 +1,6 @@
-import { NotFoundError} from '@ticket-share/common';
 import express, { Request, Response } from 'express'
 import { Ticket } from '../models/ticket';
+import { NotFoundError} from '@ticket-share/common';
 
 const router = express.Router();
 
