@@ -1,15 +1,17 @@
 import mongoose from 'mongoose';
+import { OrderStatus } from '@ticket-share/common';
+import { TicketDoc } from './ticket';
 
 interface OrdersAttrs {
     userId: string,
-    status: string;
+    status: OrderStatus;
     expiresAt: Date;
     ticket: TicketDoc;
 }
-// same set of properties for the time building
+// same soet of properties for the time building
 interface OrderDoc extends mongoose.Document {
     userId: string,
-    status: string;
+    status: OrderStatus;
     expiresAt: Date;
     ticket: TicketDoc;
 }
@@ -19,14 +21,7 @@ interface OrderModel extends mongoose.Model<OrderDoc>{
 }
 /* 
     TODO: status from order service --> payment service, watch for incomming payment
-    a) faulty credit card if fails, emit orderservice the order fail, status = fail
-    b) Order fail event look inside db find order with id of event data
-    c) update the status of the order
-    d) we need multiple service for status, the same string the exact and will lead to issues
-    e) define in common library and define order status, and and exact string value
-    
     TODO: definition for TicketDoc
-
 */
 const orderSchema = new mongoose.Schema({
     userId: {
@@ -35,7 +30,10 @@ const orderSchema = new mongoose.Schema({
     },
     status: {
         type: String,
-        required: true
+        required: true,
+        enum: Object.values(OrderStatus),
+        //Optional
+        default: OrderStatus.Created
     },
     expiresAt: {
         type: mongoose.Schema.Types.Date
@@ -46,12 +44,13 @@ const orderSchema = new mongoose.Schema({
     }
     }, {
         toJSON: {
-            transform(doc, ret){
-                ret.id = ret._id;
-                delete ret._id;
-            }
-        }
-    });
+           transform(doc, ret) {
+            ret.id = ret._id;
+            delete ret._id;
+            },
+        },
+    }
+    );
 orderSchema.statics.build =(attrs: OrdersAttrs )=> {
         return new Order(attrs);
 };
