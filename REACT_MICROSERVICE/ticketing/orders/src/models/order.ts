@@ -1,6 +1,9 @@
 import mongoose from 'mongoose';
 import { OrderStatus } from '@ticket-share/common';
 import { TicketDoc } from './ticket';
+ 
+//re-exporting
+export {OrderStatus};
 
 interface OrdersAttrs {
     userId: string,
@@ -8,7 +11,7 @@ interface OrdersAttrs {
     expiresAt: Date;
     ticket: TicketDoc;
 }
-// same soet of properties for the time building
+// same set of properties for the time building
 interface OrderDoc extends mongoose.Document {
     userId: string,
     status: OrderStatus;
