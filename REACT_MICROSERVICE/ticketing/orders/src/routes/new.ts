@@ -39,6 +39,7 @@ router.post('/api/orders', requireAuth,[
         const ticket = await Ticket.findById(ticketId);
 
         if(!ticket){
+            //throw new BadRequestError('Ticket is already reserved!'); testing expectation
             throw new NotFoundError();
         }
         // Refactored to @ticket-share/common: find an order on the ticket which has the correct status
