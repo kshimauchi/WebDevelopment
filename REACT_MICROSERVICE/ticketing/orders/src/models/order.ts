@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import { OrderStatus } from '@ticket-share/common';
 import { TicketDoc } from './ticket';
  
-//re-exporting
+//re-exporting to ticket
 export {OrderStatus};
 
 interface OrdersAttrs {
@@ -23,8 +23,8 @@ interface OrderModel extends mongoose.Model<OrderDoc>{
     build(attrs: OrdersAttrs) : OrderDoc;
 }
 /* 
-    TODO: status from order service --> payment service, watch for incomming payment
-    TODO: definition for TicketDoc
+TODO: status from order service --> payment service, watch for incomming payment
+TODO: definition for TicketDoc
 */
 const orderSchema = new mongoose.Schema({
     userId: {

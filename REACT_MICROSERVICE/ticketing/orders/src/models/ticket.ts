@@ -37,21 +37,21 @@ const ticketSchema = new mongoose.Schema(
     },
   }
 );
-
+// statics allows us access to the overall collection
 ticketSchema.statics.build = (attrs: TicketAttrs) => {
   return new Ticket(attrs);
 };
+    // Make sure that this ticket has not already reserved
+    // Run query to look at all orders.  Find an order where the ticket
+    // is the ticket we just found and the orders status is not cancelled
+    // if we find an order from that means the ticket is reserved
 
-
-        // Make sure that this ticket has not already reserved
-        // Run query to look at all orders.  Find an order where the ticket
-        // is the ticket we just found and the orders status is not cancelled
-        // if we find an order from that means the ticket is reserved
-ticketSchema.methods.isReserved = async function () {
+// do not use an arrow function here due to arrow functions convuluting the meaning of (this)
+ticketSchema.methods.isReserved = async function (){
   // this === the ticket document that we just called 'isReserved' on
   const existingOrder = await Order.findOne({
-    //@ts-ignore
-    ticket: this,
+    // this ===(this as any) for this (ts-version)
+    ticket: this as any,
     status: {
       $in: [
         OrderStatus.Created,
@@ -60,10 +60,10 @@ ticketSchema.methods.isReserved = async function () {
       ],
     },
   });
-
+  //takes existingOrder and if it null (!)flips to true(!)flips it to false
+  //vice-versa if its defined (!)flips to false (!) flips to true
   return !!existingOrder;
 };
-
 const Ticket = mongoose.model<TicketDoc, TicketModel>('Ticket', ticketSchema);
 
 export { Ticket };
