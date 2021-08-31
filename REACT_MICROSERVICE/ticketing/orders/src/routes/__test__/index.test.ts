@@ -13,6 +13,7 @@ const buildTicket = async()=>{
     return ticket;
 }
 
+
 it('fetches orders for a particular user', async()=>{
     // create three tickets
   const ticket1 = await buildTicket();
@@ -27,7 +28,7 @@ it('fetches orders for a particular user', async()=>{
         .set('Cookie', userOne)
         .send({ticketId: ticket1.id})
         .expect(201);
-    //make a request to get orders for user#2
+    //make a request to get orders for user#2 renaming body to orderOne
     const {body: orderOne} = await request(app)
         .post('/api/orders')
         .set('Cookie', userTwo)
@@ -44,7 +45,7 @@ it('fetches orders for a particular user', async()=>{
     const response = await request(app)
         .get('/api/orders')
         .set('Cookie', userTwo)
-        .expect(200);
+        .expect(200);  //change to 500 check reload
 
     //console.log(response.body);
     //console.log(orderOne);
@@ -53,7 +54,7 @@ it('fetches orders for a particular user', async()=>{
   
     expect(response.body[0].id).toEqual(orderOne.id);
     expect(response.body[1].id).toEqual(orderTwo.id);
-    
+    //Verifying embedded tickets
     expect(response.body[0].ticket.id).toEqual(ticket2.id);
     expect(response.body[1].ticket.id).toEqual(ticket3.id);
 
