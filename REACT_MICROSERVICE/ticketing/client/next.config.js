@@ -6,7 +6,15 @@ module.exports = {
         return config;
     },
     async headers() {
-        return [{ source: "/(.*)", headers: createSecureHeaders() }];
+        return [
+        {   
+            source: "/(.*)", 
+            headers: createSecureHeaders(), 
+            poweredByHeader: false,
+            
+            
+        }
+        ];
     },
 };
 //poll all files every 300s
