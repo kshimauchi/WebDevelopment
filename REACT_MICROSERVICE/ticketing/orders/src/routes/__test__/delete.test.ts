@@ -3,7 +3,7 @@ import { app} from '../../app';
 import { Order, OrderStatus } from '../../models/order';
 import { Ticket } from '../../models/ticket';
 
-//we are keeping fairly brief
+//we are keeping this fairly brief
 it('marks and order as cancelled',async()=>{
     //create a ticket with Ticket Model
     const ticket = Ticket.build({
