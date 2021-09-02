@@ -23,6 +23,7 @@ it('marks and order as cancelled',async()=>{
 
     await request(app)
         .delete(`/api/orders/${order.id}`)
+        .set('Cookie', user)
         .send()
         .expect(204);
     
