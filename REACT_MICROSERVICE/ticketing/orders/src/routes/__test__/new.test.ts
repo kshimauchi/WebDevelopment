@@ -101,5 +101,6 @@ it('emits an order created event', async()=>{
         .set('Cookie', global.signin())
         .send( {ticketId: ticket.id })
         .expect(201);
+    //expect(natsWrapper.client.publish).not.toHaveBeenCalled();
     expect(natsWrapper.client.publish).toHaveBeenCalled();
 });
