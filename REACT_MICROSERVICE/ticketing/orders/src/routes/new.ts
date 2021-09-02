@@ -9,7 +9,10 @@ import {
     OrderStatus, 
     BadRequestError } 
 from '@ticket-share/common';
+
 import { Order } from '../models/order';
+import { OrderCreatedPublisher} from '../events/publishers/order-created-publisher';
+import { natsWrapper } from '.././nats-wrapper';
 
 /* (Window of time a user has to purchase a ticket)
     ***Options that could be considered for implementation***
@@ -61,9 +64,21 @@ router.post('/api/orders', requireAuth,[
         });
         await order.save();
         
-          // publish the event the order that has been created
+        // publish the event the order that has been created
+        new OrderCreatedPublisher(natsWrapper.client).publish({
+            
+            id: order.id,
+            status: order.status,
+            userId: order.userId,
+            expiresAt: order.expiresAt.toISOString(),
+            
+            ticket: {
+                id : ticket.id,
+                price: ticket.price,
+            },
+        });        
         res.status(201).send(order);
       
-        res.send({});
+        // res.send({});
 });
 export {router as newOrderRouter};
