@@ -1,7 +1,8 @@
 import mongoose from 'mongoose';
 import { app } from './app';
 import { natsWrapper } from './nats-wrapper';
-
+import {TicketCreatedListener} from './events/listeners/ticket-created-listener';
+import {TicketUpdatedListener} from './events/listeners/ticket-updated-listener';
 
 const start = async () => {
  
@@ -37,7 +38,11 @@ const start = async () => {
      
         process.on('SIGINT', () =>  natsWrapper.client.close());
         process.on('SIGTERM', () => natsWrapper.client.close());
-           
+        //(1) Creating instance of our ticketCreatedListener
+        new TicketCreatedListener(natsWrapper.client).listen();
+        //(2) Created instance of ticketUpdated Events
+        new TicketUpdatedListener(natsWrapper.client).listen();
+
         await mongoose.connect( process.env.MONGO_URI, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
