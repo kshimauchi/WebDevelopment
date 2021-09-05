@@ -9,9 +9,7 @@ module.exports = {
         return [
         {   
             source: "/(.*)", 
-            headers: createSecureHeaders(), 
-            poweredByHeader: false,
-            
+            headers: createSecureHeaders()    
             
         }
         ];

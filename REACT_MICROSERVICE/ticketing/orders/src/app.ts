@@ -23,10 +23,11 @@ app.use(
 );
 app.use(currentUser);
 
+app.use( deleteOrderRouter );
 app.use( newOrderRouter );
 app.use( indexOrderRouter );
 app.use( showOrderRouter );
-app.use( deleteOrderRouter );
+
 
 
 app.all("*", async (req, res) => {

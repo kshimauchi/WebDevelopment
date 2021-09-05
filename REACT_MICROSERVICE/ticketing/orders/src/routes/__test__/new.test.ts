@@ -48,7 +48,7 @@ it('returns an error if the ticket is already reserved', async()=>{
     // creates a order with erroneous expiresAt
     const order = Order.build({
         
-        userId: 'randomId',
+        userId: 'randomIdfdsafff',
         status: OrderStatus.Created,
         // expires instantly but a expiration service will e
         // added later

@@ -1,6 +1,7 @@
+import mongoose from 'mongoose';
 import  express, {Request, Response} from 'express';
 import { body } from 'express-validator';
-import mongoose from 'mongoose';
+
 import { Ticket} from '../models/ticket';
 import { 
     requireAuth, 
@@ -12,7 +13,7 @@ from '@ticket-share/common';
 
 import { Order } from '../models/order';
 import { OrderCreatedPublisher} from '../events/publishers/order-created-publisher';
-import { natsWrapper } from '.././nats-wrapper';
+import { natsWrapper } from '../nats-wrapper';
 
 /* (Window of time a user has to purchase a ticket)
     ***Options that could be considered for implementation***
@@ -25,16 +26,15 @@ const EXPIRATION_WINDOW_SECONDS = 15*60;
 
 const router = express.Router();
 
-router.post('/api/orders', requireAuth,[
-    //(1) checking real mongoId
+router.post('/api/orders', requireAuth,
+[
     body('ticketId')
         .not()
         .isEmpty()
-        .custom((input: string)=> mongoose.Types.ObjectId.isValid(input))
-        .withMessage('TicketId must be provided')
-
-], validateRequest,
-    
+        .custom((input: string)=> mongoose.Types.ObjectId(input))
+        .withMessage('TicketId must be provided'),
+],  validateRequest,
+ 
     async(req: Request, res: Response)=>{
         // Find the ticket user is trying to order
         const { ticketId } = req.body;
@@ -60,13 +60,12 @@ router.post('/api/orders', requireAuth,[
             status: OrderStatus.Created,
             expiresAt: expiration,
             //ticket: ticket abbreviated
-            ticket
+            ticket,
         });
         await order.save();
         
         // publish the event the order that has been created
         new OrderCreatedPublisher(natsWrapper.client).publish({
-            
             id: order.id,
             status: order.status,
             userId: order.userId,
@@ -76,7 +75,7 @@ router.post('/api/orders', requireAuth,[
                 id : ticket.id,
                 price: ticket.price,
             },
-        });        
+        });
         res.status(201).send(order);
       
         // res.send({});
