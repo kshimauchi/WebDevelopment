@@ -8,18 +8,20 @@ export class TicketUpdatedListener extends Listener<TicketUpdatedEvent> {
   queueGroupName = queueGroupName;
 
   async onMessage(data: TicketUpdatedEvent['data'], msg: Message) {
-    // we need both ticketid and version
+    //  we need both ticketid and previous version
     // if we cannot find this we will throw an error
-    const ticket = await Ticket.findOne({
-      _id: data.id,
-      version: data.version -1
-    });
+    // refactored out this logic to Schema.statics
+    // of models ticket
+    const ticket = await Ticket.findByEvent(data);
     
     if(!ticket){
       throw new Error('Ticket Not Found');
     }
-    const { title, price } = data;
-    ticket.set({ title, price });
+    // the version property is on this and rather than using
+    // the plugin we want to replace
+    // then we want to customize the update to inject
+    const { title, price, version } = data;
+    ticket.set({ title, price, version });
     await ticket.save();
 
     msg.ack();
