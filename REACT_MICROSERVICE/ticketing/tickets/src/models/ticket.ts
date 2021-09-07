@@ -38,6 +38,8 @@ const ticketSchema = new mongoose.Schema({
     },
         
 });
+// Renaming the version since __V is fairly particular,
+//here we are setting the name to version
 ticketSchema.set('versionKey', 'version');
 
 ticketSchema.plugin(updateIfCurrentPlugin);

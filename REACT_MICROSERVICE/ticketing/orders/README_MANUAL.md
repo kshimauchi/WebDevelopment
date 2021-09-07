@@ -1,6 +1,0 @@
-## Routes for Orders Services
-   ###
-   ###
-   ###
-   ###
-##
