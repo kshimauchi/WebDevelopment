@@ -11,7 +11,7 @@ interface TicketAttrs {
 export interface TicketDoc extends mongoose.Document {
   title: string;
   price: number;
-  version: number;
+  version: number;   
   isReserved(): Promise<boolean>;
 }
 
@@ -44,14 +44,14 @@ const ticketSchema = new mongoose.Schema(
 );
 
 ticketSchema.set('versionKey','version');
-//ticketSchema.plugin(updateIfCurrentPlugin);
-ticketSchema.pre('save',function(done) {
-  //reassign property on the save operation
-  this.$where = {
-    version: this.get('version') -1
-  };
-  done();  
-})
+ticketSchema.plugin(updateIfCurrentPlugin);
+// ticketSchema.pre('save',function(done) {
+//   //reassign property on the save operation
+//   this.$where = {
+//     version: this.get('version') -1
+//   };
+//   done();  
+// })
 ticketSchema.statics.findByEvent = (event: {id: string, version: number} )=> {
   // what the ticket by two criteria: event and previous version
   // why? concurrency issue of not processing in order   

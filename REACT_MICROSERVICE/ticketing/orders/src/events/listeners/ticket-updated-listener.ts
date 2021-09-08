@@ -20,8 +20,8 @@ export class TicketUpdatedListener extends Listener<TicketUpdatedEvent> {
     // the version property is on this and rather than using
     // the plugin we want to replace
     // then we want to customize the update to inject
-    const { title, price, version } = data;
-    ticket.set({ title, price, version });
+    const { title, price } = data;
+    ticket.set({ title, price });
     await ticket.save();
 
     msg.ack();
