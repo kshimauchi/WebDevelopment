@@ -24,7 +24,7 @@ const setup = async()=>{
     return { listener, data, msg };
 };
 
-it('creates and saves a ticket', async()=>{
+it('creates and saves a ticket', async()=> {
     const {listener, data, msg } = await setup();
     //call the onMessage function with the data object and message object
     await listener.onMessage(data, msg);
