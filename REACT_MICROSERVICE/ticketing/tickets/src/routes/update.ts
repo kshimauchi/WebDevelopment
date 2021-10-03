@@ -30,7 +30,7 @@ router.put(
       throw new NotFoundError();
     }
     //a ticket is reserved if the ticket has and orderId
-    //and if the ticket is reserved is not available for edit
+    //and if the ticket is reserved it is not available for edit
     if(ticket.orderId){
       throw new BadRequestError('Cannot edit a reserved ticket');
     }

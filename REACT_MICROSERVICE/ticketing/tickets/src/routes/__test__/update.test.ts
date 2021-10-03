@@ -124,7 +124,12 @@ it('publishes an event', async()=>{
     .expect(200);
   expect(natsWrapper.client.publish).toHaveBeenCalled();
   });
-
+/* 
+1) Creates a ticket
+2) Edit / save the ticket
+3) Check for 400 error
+4) if we dont set the orderId property, should result in 200, and should fail
+*/
 it('rejects updates if the the ticket is reserved', async()=>{
   const cookie =  global.signin();
 
