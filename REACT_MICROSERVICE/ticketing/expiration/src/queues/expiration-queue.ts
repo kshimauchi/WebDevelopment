@@ -1,15 +1,4 @@
 import Queue from 'bull';
-// we will create some queue jobs
-// and send to redis server
-// job: Type String description to nats-streaming server
-// we will temporarily store this in redis server
-// we will process these jobs and emit events like expiration complete
-/* 
-
-job: {
-    orderId: string
-}
-**/
 
 interface Payload {
     orderId: string;
