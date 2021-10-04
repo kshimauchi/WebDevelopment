@@ -22,7 +22,7 @@ import { natsWrapper } from '../nats-wrapper';
 (3) and maybe env, use like in properties file
 (4) add as some per user setting
 */
-const EXPIRATION_WINDOW_SECONDS = 15*60;
+const EXPIRATION_WINDOW_SECONDS = 1*60;
 
 const router = express.Router();
 
