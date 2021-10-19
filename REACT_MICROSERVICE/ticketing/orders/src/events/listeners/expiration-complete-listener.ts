@@ -21,11 +21,12 @@ export class ExpirationCompleteListener extends Listener<ExpirationCompleteEvent
             // no tie between ticket and orders
         });
         await order.save();
-
+        //order id, order version, and the ticket it was associated with
         await new OrderCancelledPublisher(this.client).publish({
             id: order.id ,
             version: order.version,
             ticket: {
+                //id of ticket:
                 id: order.ticket.id
             }
         });
