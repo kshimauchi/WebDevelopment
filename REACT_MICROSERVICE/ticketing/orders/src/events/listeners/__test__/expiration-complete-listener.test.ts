@@ -40,7 +40,7 @@ const setup = async()=> {
 //These should be clear enough
 it('updates the order status to cancelled', async()=>{
     
-    const { listener, order, ticket, data, msg}= await setup();
+    const { listener, order, data, msg}= await setup();
 
     await listener.onMessage(data, msg);
 
@@ -51,7 +51,7 @@ it('updates the order status to cancelled', async()=>{
 
 it('emits an OrderCancelled event', async()=>{
     
-    const { listener, order, ticket, data, msg}= await setup();
+    const { listener, order,  data, msg}= await setup();
 
     await listener.onMessage(data, msg);
     
@@ -60,14 +60,17 @@ it('emits an OrderCancelled event', async()=>{
        
     //channel name/ entire data object as json
     const eventData = JSON.parse(
-    (natsWrapper.client.publish as jest.Mock).mock.calls[0][1]
-    );
+    (natsWrapper.client.publish as jest.Mock).mock.calls[0][1]);
+    
     expect(eventData.id).toEqual(order.id);
 });
 
 it('ack the message', async()=> { 
     
-    const { listener, order, ticket, data, msg}= await setup();
+    const { listener, data, msg}= await setup();
 
     await listener.onMessage(data, msg);
+
+    expect(msg.ack).toHaveBeenCalled();
+
 });
