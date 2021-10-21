@@ -5,11 +5,18 @@ import { NotFoundError} from '@ticket-share/common';
 const router = express.Router();
 
 router.get('/api/tickets/:id', async (req: Request, res: Response) => {
-    const ticket = await Ticket.findById(req.params.id);
+    //error potential
+    try{
+        //cast error here with object id, mongoose was previously findbyid
+    const ticket = await Ticket.findByIdAndUpdate(req.params.id);
 
     if (!ticket) {
         throw new NotFoundError();
     }
     res.send(ticket);
+    
+    } catch(err){
+     console.log(err);
+ }
 });
 export { router as showTicketRouter };
