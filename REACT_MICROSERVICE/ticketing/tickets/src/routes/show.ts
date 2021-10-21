@@ -8,7 +8,7 @@ router.get('/api/tickets/:id', async (req: Request, res: Response) => {
     //error potential
     try{
         //cast error here with object id, mongoose was previously findbyid
-    const ticket = await Ticket.findByIdAndUpdate(req.params.id);
+    const ticket = await Ticket.findById(req.params.id);
 
     if (!ticket) {
         throw new NotFoundError();
