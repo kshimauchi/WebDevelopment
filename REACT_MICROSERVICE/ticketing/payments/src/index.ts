@@ -52,3 +52,12 @@ const start = async () => {
     });
 };
 start();
+/* 
+Payment needs
+id
+status: 
+version: process event with proper payment
+userId: correct person
+expiresAt:  Do not realy need this cause order determines this
+ticket: {id: price} ? we just need the price person
+*/
