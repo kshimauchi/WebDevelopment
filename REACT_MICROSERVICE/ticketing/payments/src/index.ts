@@ -39,7 +39,8 @@ const start = async () => {
         process.on('SIGINT', () =>  natsWrapper.client.close());
         process.on('SIGTERM', () => natsWrapper.client.close());
         
-        //instance of listeners
+        //instance of listeners: this service will subscribe for order cancelled/created
+        //should back fill all previous event that have been stored
         new OrderCreatedListener(natsWrapper.client).listen();
         new OrderCancelledListener(natsWrapper.client).listen();
   
