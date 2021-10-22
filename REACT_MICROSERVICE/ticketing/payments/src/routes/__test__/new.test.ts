@@ -43,10 +43,10 @@ it('returns a 400 when purchasing a cancelled order', async()=>{
 
     const order = Order.build({
         id: mongoose.Types.ObjectId().toHexString(),
-        userId: mongoose.Types.ObjectId().toHexString(),
+        userId,
         version: 0,
         price: 20,
-        status: OrderStatus.Cancelled
+        status: OrderStatus.Cancelled,
     });
     await order.save();
 
