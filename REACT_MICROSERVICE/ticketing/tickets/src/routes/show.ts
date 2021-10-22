@@ -1,12 +1,13 @@
 import express, { Request, Response } from 'express'
 import { Ticket } from '../models/ticket';
-import { NotFoundError} from '@ticket-share/common';
+import { NotFoundError, BadRequestError} from '@ticket-share/common';
+import mongoose from 'mongoose';
 
 const router = express.Router();
 
 router.get('/api/tickets/:id', async (req: Request, res: Response) => {
     //error potential
-    try{
+
     
     const ticket = await Ticket.findById(req.params.id);
 
@@ -14,9 +15,7 @@ router.get('/api/tickets/:id', async (req: Request, res: Response) => {
         throw new NotFoundError();
     }
     res.send(ticket);
-    
-    } catch(err){
-     console.log(err);
- }
+
+    console.log(ticket);
 });
 export { router as showTicketRouter };
