@@ -1,6 +1,6 @@
 import {Listener, OrderCreatedEvent, Subjects } from '@ticket-share/common';
 import {queueGroupName} from './queue-group-name';
-import { Order } from '../models/order';
+import { Order } from '../../models/order';
 import { Message} from 'node-nats-streaming';
 
 export class OrderCreatedListener extends Listener<OrderCreatedEvent> {

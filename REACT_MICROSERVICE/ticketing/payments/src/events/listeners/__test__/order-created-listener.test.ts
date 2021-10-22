@@ -1,8 +1,8 @@
-import { natsWrapper } from "../../nats-wrapper";
+import { natsWrapper } from "../../../nats-wrapper";
 import { OrderCreatedListener } from "../order-created-listener";
 import { OrderCreatedEvent, OrderStatus } from "@ticket-share/common";
 import mongoose from 'mongoose';
-import { Order } from "../../models/order";
+import { Order } from "../../../models/order";
 
 
 const setup = async()=>{

@@ -1,5 +1,5 @@
 import { OrderCancelledEvent, Subjects, Listener, OrderStatus } from "@ticket-share/common";
-import { Order } from "../models/order";
+import { Order } from "../../models/order";
 import { queueGroupName } from "./queue-group-name";
 import { Message } from 'node-nats-streaming';
 
