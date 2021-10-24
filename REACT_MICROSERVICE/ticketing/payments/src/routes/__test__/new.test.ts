@@ -65,7 +65,7 @@ it('returns a 400 when purchasing a cancelled order', async()=>{
 
 });
 
-it('returns a 204 with valid input', async()=>{
+it('returns a 201 with valid input', async()=>{
     const userId = mongoose.Types.ObjectId().toHexString();
 
     const order = Order.build({
@@ -94,3 +94,10 @@ it('returns a 204 with valid input', async()=>{
     //the downside is we are not really reaching out to the stripe api
     
 });
+// (1) Realistically, in order to make an api call test outside of the cluster
+// (2) Need to remove the jest.mock()
+// (3) rename the setup.ts file, so that it is not invoked
+// (4) refactore the api key, to an .env file making sure the .env file is .gitignored
+// (5) make a request to the api, perhaps with a randomly generated price
+// (6) using the list api end point of the stripe endpoint, and iterate through the returned list
+// (7) create expectations around this with the idea of not looking at stale data
