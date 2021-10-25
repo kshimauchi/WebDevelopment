@@ -90,14 +90,45 @@ it('returns a 201 with valid input', async()=>{
     expect(chargeOptions.source).toEqual('tok_visa');
     expect(chargeOptions.amount).toEqual(20*100);
     expect(chargeOptions.currency).toEqual('usd');
-
-    //the downside is we are not really reaching out to the stripe api
-    
 });
+//     //the downside is we are not really reaching out to the stripe api
+    
+
 // (1) Realistically, in order to make an api call test outside of the cluster
 // (2) Need to remove the jest.mock()
 // (3) rename the setup.ts file, so that it is not invoked
-// (4) refactore the api key, to an .env file making sure the .env file is .gitignored
+// (4) refactor the api key, to an .env file making sure the .env file is .gitignored
 // (5) make a request to the api, perhaps with a randomly generated price
 // (6) using the list api end point of the stripe endpoint, and iterate through the returned list
 // (7) create expectations around this with the idea of not looking at stale data
+
+
+// it('returns a 201 with valid input', async()=>{
+//     const userId = mongoose.Types.ObjectId().toHexString();
+//     const price = Math.floor(Math.random()*100000);
+//     const order = Order.build({
+//         id: mongoose.Types.ObjectId().toHexString(),
+//         userId,
+//         version: 0,
+//         price,
+//         status: OrderStatus.Created,
+//     });
+//     await order.save();
+
+//     await request(app)
+//         .post('/api/payments')
+//         .set('Cookie', global.signin(userId))
+//         .send({
+//             token: 'tok_visa',
+//             orderId: order.id,
+
+//         })
+//         expect(201);
+
+//     const stripeCharges = await stripe.charges.list({limit: 50});
+//     const stripeCharge = stripeCharges.data.find(charge=>{
+//         return charge.amount === price*100
+//     });
+//     expect(stripeCharge).toBeDefined();
+//     expect(stripeCharge!.currency).toEqual('usd');
+// });
