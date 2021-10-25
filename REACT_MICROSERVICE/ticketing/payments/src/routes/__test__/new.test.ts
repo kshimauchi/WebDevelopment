@@ -4,6 +4,7 @@ import mongoose from 'mongoose';
 import { Order } from '../../models/order';
 import { OrderStatus} from '@ticket-share/common';
 import {stripe} from '../../stripe';
+import { Payment } from '../../models/payment';
 
 jest.mock('../../stripe');
 
@@ -67,7 +68,7 @@ it('returns a 400 when purchasing a cancelled order', async()=>{
 
 it('returns a 201 with valid input', async()=>{
     const userId = mongoose.Types.ObjectId().toHexString();
-
+   // const price = Math.floor(Math.random()*100000);
     const order = Order.build({
         id: mongoose.Types.ObjectId().toHexString(),
         userId,
@@ -90,6 +91,19 @@ it('returns a 201 with valid input', async()=>{
     expect(chargeOptions.source).toEqual('tok_visa');
     expect(chargeOptions.amount).toEqual(20*100);
     expect(chargeOptions.currency).toEqual('usd');
+    //for use with real api
+    // const stripeCharges = await stripe.charges.list({limit: 50});
+    // const stripeCharge = stripeCharges.data.find(charge=>{
+    //     return charge.amount === price*100
+    // });
+    // expect(stripeCharge).toBeDefined();
+    // expect(stripeCharge!.currency).toEqual('usd');
+    // const payment = await Payment.findOne({
+    //     orderId: order.id,
+    //     stripeId: stripeCharge!.id
+    // });
+    // //payment will either be null or the payment
+    // expect(payment).not.toBeNull();
 });
 //     //the downside is we are not really reaching out to the stripe api
     

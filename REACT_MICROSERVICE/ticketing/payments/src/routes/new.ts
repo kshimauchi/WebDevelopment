@@ -5,13 +5,16 @@ import {
     BadRequestError,
     NotFoundError,
     NotAuthorizedError,
-    OrderStatus
+    OrderStatus,
+    
 } from '@ticket-share/common';
 //new charge object
 import {body} from 'express-validator';
 import { Order } from '../models/order';
 import { stripe } from '../stripe';
-
+import { Payment } from '../models/payment';
+import { PaymentCreatedPublisher } from '../events/publishers/payment-created-publisher';
+import { natsWrapper } from '../nats-wrapper';
 const router = express.Router();
 
 router.post('/api/payments',
@@ -40,13 +43,23 @@ async (req: Request, res: Response)=>{
     }
     //create a charge using stripe: see stripe doc, for additional options
     //(1) we will be testing with a secret token
-    await stripe.charges.create({
+    const charge = await stripe.charges.create({
         currency: 'usd',
         amount: order.price*100,
         source: token
     });
-    //if all of these checks pass than we return a generic response
-    res.status(201).send({success: true});
+    const payment = Payment.build({
+        orderId,
+        stripeId: charge.id
+    });
+    await payment.save();
+    
+    new PaymentCreatedPublisher(natsWrapper.client).publish({
+        id: payment.id,
+        orderId: payment.orderId,
+        stripeId: payment.stripeId
+    });
+    //verify id in test
+    res.status(201).send({id: payment.id});
 });
 export {router as createChargeRouter};
-//k8s
