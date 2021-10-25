@@ -4,6 +4,7 @@ import { natsWrapper } from './nats-wrapper';
 import {TicketCreatedListener} from './events/listeners/ticket-created-listener';
 import {TicketUpdatedListener} from './events/listeners/ticket-updated-listener';
 import { ExpirationCompleteListener } from './events/listeners/expiration-complete-listener';
+import { PaymentCreatedListener } from './events/listeners/payment-created-listener';
 
 const start = async () => {
  
@@ -45,7 +46,9 @@ const start = async () => {
         new TicketUpdatedListener(natsWrapper.client).listen();
         //(3) Created instance of the ExpirationationCompleteListener
         new ExpirationCompleteListener(natsWrapper.client).listen();
-
+        //(4) Created instance of the PaymentsCreatedListener
+        new PaymentCreatedListener(natsWrapper.client).listen();
+        
         await mongoose.connect( process.env.MONGO_URI, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
