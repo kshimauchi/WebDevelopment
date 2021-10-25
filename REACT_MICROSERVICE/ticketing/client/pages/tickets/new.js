@@ -1,4 +1,5 @@
 import {useState} from 'react';
+import Router from 'next/router';
 import useRequest from '../../hooks/use-request';
 
 const NewTicket = ()=>{
@@ -11,8 +12,8 @@ const NewTicket = ()=>{
         url: '/api/tickets',
         method: 'post',
         body: {title,price},
-        //the ticket 
-        onSuccess: (ticket)=> console.log(ticket)
+        //programatic redirect
+        onSuccess: ()=> Router.push('/')
     });
     //onSubmit helper
     const onSubmit =(event)=> {
