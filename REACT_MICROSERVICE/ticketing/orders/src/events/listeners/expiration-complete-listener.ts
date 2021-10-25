@@ -11,8 +11,17 @@ export class ExpirationCompleteListener extends Listener<ExpirationCompleteEvent
 
     async onMessage(data: ExpirationCompleteEvent['data'], msg: Message){
         const order = await Order.findById(data.orderId).populate('ticket');
+        
         if(!order){
             throw new Error('Order not found');
+        }
+        /*
+            Important fix: What happens when the order has already been paid for 
+            If the order has been complete then return early cause we do not want
+            to cancel the order
+        */
+        if(order.status === OrderStatus.Complete){
+            return msg.ack();
         }
         order.set({ 
             status: OrderStatus.Cancelled,
