@@ -1,13 +1,20 @@
+import Link from 'next/link';
+
 const LandingPage = ({ currentUser , tickets}) => {
-   console.log(tickets); 
+   //console.log(tickets); 
   //Will think of a way to generate table with some filters
   
-  
+  //Wild Card Link route
   const ticketList = tickets.map((ticket) => {
     return(
       <tr key={ticket.id}>
         <td>{ticket.title}</td>
         <td>{ticket.price}</td>
+        <td>
+          <Link href="/tickets/[ticketId]" as={`/tickets/${ticket.id}`}>
+            <a>View</a>
+          </Link>
+        </td>
       </tr>
     );
   });
@@ -19,6 +26,7 @@ const LandingPage = ({ currentUser , tickets}) => {
         <tr>
           <th>Title</th>
           <th>Price</th>
+          <th>Link</th>
         </tr>
       </thead>
       <tbody>
