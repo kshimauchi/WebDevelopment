@@ -1,8 +1,26 @@
 import {useState} from 'react';
+import useRequest from '../../hooks/use-request';
+
 const NewTicket = ()=>{
     const [title, setTitle] = useState('');
     const [price, setPrice] = useState('');
-
+    //the doRequest method has four arguments and we are going to use this function
+    //error is empty until a request fails
+    const { doRequest, errors } = useRequest({
+        //options to customize the request
+        url: '/api/tickets',
+        method: 'post',
+        body: {title,price},
+        //the ticket 
+        onSuccess: (ticket)=> console.log(ticket)
+    });
+    //onSubmit helper
+    const onSubmit =(event)=> {
+        
+        event.preventDefault();
+        
+        doRequest();
+    }
     //deselecting price we want to round the price 
     const onBlur = () =>{
         const value = parseFloat(price);
@@ -16,7 +34,8 @@ const NewTicket = ()=>{
 
     return (<div>
         <h1>Create a Ticket</h1>
-        <form>
+        
+        <form onSubmit={onSubmit}>
             <div className="form-group">
                 <label>Title</label>
                 <input 
@@ -36,7 +55,7 @@ const NewTicket = ()=>{
             </div>
 
             <div>
-            
+            {errors}
             <button className="btn btn-primary">Submit</button>
             </div>
         </form>
