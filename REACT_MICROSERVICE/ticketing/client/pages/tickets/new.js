@@ -55,10 +55,9 @@ const NewTicket = ()=>{
                 />
             </div>
 
-            <div>
             {errors}
             <button className="btn btn-primary">Submit</button>
-            </div>
+            
         </form>
     </div>
     );

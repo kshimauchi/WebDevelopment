@@ -27,8 +27,8 @@ AppComponent.getInitialProps = async (appContext) => {
  
   return {
     pageProps,
-    ...data
-  } 
+    ...data,
+  }; 
 };
 
 export default AppComponent;
