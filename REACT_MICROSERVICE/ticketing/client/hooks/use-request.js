@@ -5,12 +5,14 @@ import { useState } from 'react';
 export default function doRequest({ url, method, body, onSuccess }) {
     const [errors, setErrors] = useState(null);
     
-    const doRequest = async() => {
+    //props empty obj for additional arguments when need be
+    const doRequest = async(props = {}) => {
         try {
             //clear previous error if any
             setErrors(null);
             
-            const response = await axios[method](url, body);
+            const response = await axios[method](url,{...body, ...props});
+            //const response = await axios[method](url, body);
             
             // for routing purposes to landing page on success
             if (onSuccess) {
