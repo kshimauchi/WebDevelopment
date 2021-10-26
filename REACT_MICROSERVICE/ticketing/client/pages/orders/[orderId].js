@@ -27,7 +27,7 @@ const OrderShow = ({order, currentUser})=>{
     if(timeLeft < 0){
         return <div>Order Expired</div>
     }
-    console.log(process.env.NEXT_PUBLIC_STRIPE_KEY_PK);
+   
     return (<div>
         Time left to pay: {timeLeft} seconds
         

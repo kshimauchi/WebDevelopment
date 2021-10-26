@@ -18,6 +18,7 @@
 .env.production.local
 *.env
 .env
+.env.*.local
 
 # config
 # *.yaml
