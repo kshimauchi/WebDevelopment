@@ -11,9 +11,9 @@ const NewTicket = ()=>{
         //options to customize the request
         url: '/api/tickets',
         method: 'post',
-        body: {title,price},
+        body: {title,price,},
         //programatic redirect
-        onSuccess: ()=> Router.push('/')
+        onSuccess: ()=> Router.push('/'),
     });
     //onSubmit helper
     const onSubmit =(event)=> {
