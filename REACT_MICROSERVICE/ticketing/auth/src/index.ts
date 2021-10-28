@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import { app } from './app';
 
 const start = async () => {
+    console.log("Starting up");
     //could be local but were using a cluster ip service
     //capture jwt key error if not defined
     if (!process.env.JWT_KEY) {
