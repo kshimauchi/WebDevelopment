@@ -1,10 +1,12 @@
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import mongoose from 'mongoose';
 import jwt from 'jsonwebtoken';
+import { ObjectId } from 'mongodb';
+
 
 
 declare global {
-    var signin: () => Promise<string[]>;
+    var signin: () => string[];
 }
 
 jest.mock('../nats-wrapper');
@@ -15,6 +17,7 @@ beforeAll(async () => {
     
     process.env.JWT_KEY = 'placeholder';
     process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+    //mongo = new MongoMemoryServer()
     mongo = await MongoMemoryServer.create();
     const mongoUri = await mongo.getUri();
 
@@ -22,6 +25,7 @@ beforeAll(async () => {
         useNewUrlParser: true,
         useUnifiedTopology: true
     });
+
 });
 
 beforeEach(async () => {
@@ -41,13 +45,15 @@ afterAll(async () => {
 });
 
 //fabricating a signin...
-global.signin = async () => {
+global.signin =  () => {
+   
      // (1) build JWT payload. { id, email}
     const payload = {
-        id: new mongoose.Types.ObjectId(),
+        id: new mongoose.Types.ObjectId().toString(),
         //new mongoose.Types.ObjectId().toHexString(),
         email: 'test@test.com'
     }
+    
     // (2) create the JWT!
     const token = jwt.sign(payload, process.env.JWT_KEY!);
     // (3) build session obj. {jwt: MY_JWT}
