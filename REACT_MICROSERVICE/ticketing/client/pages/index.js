@@ -1,7 +1,7 @@
 import Link from 'next/link';
 
 const LandingPage = ({ currentUser , tickets}) => {
-   //console.log(tickets); 
+  console.log(tickets); 
   //Will think of a way to generate table with some filters
   
   //Wild Card Link route (href and as) next link

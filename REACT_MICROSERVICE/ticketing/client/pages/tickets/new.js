@@ -11,7 +11,10 @@ const NewTicket = ()=>{
         //options to customize the request
         url: '/api/tickets',
         method: 'post',
-        body: {title,price,},
+        body: {
+            title,
+            price
+        },
         //programatic redirect
         onSuccess: ()=> Router.push('/'),
     });
@@ -25,7 +28,7 @@ const NewTicket = ()=>{
     //deselecting price we want to round the price 
     const onBlur = () =>{
         const value = parseFloat(price);
-        //string
+        //if input is not a number
         if(isNaN(value)){
             return;
         }

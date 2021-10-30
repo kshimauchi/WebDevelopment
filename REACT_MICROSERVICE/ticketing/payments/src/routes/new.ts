@@ -23,7 +23,7 @@ router.post('/api/payments',
  [
      body('token').not().isEmpty(), 
      body('orderId').not().isEmpty(),
-     validateRequest
+     validateRequest,
 ],
 async (req: Request, res: Response)=>{
     //destructing the token and id off the request body
