@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useState } from 'react';
 
 
-export default function doRequest({ url, method, body, onSuccess }) {
+export default ({ url, method, body, onSuccess })=>{
     const [errors, setErrors] = useState(null);
     
     //props empty obj for additional arguments when need be
@@ -25,15 +25,14 @@ export default function doRequest({ url, method, body, onSuccess }) {
             
             setErrors(
             <div className="alert alert-danger">
-                <h4>Error in ProgressEvent...</h4>
+                <h4>Ooops...</h4>
                 <ul className="my-0" >
-                    {
-                        err.response.data.errors.map(
-                            err => (
-                            <li key= { err.message }>
-                                {err.message}    
-                            </li>
-                        ))}
+                    { err.response.data.errors.map(
+                        (err) => (
+                            <li key= { err.message }>{err.message}</li>
+                        )
+                    )
+                    }
                 </ul>
             </div>
             );
