@@ -1,5 +1,5 @@
 #Specifiy base image
-FROM node:alpine
+FROM node:21.2-alpine3.18
 
 # Do not overwrite files inside the root directory of the container
 # copy to this work directory 
