@@ -10,7 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "axios": "^0.21.4",
+    "axios": "^1.6.3",
     "bootstrap": "^5.0.2",
     "next": "^11.1.2",
     "next-secure-headers": "^2.2.0",
