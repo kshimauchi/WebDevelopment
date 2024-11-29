@@ -4,6 +4,7 @@ import { Ticket} from '../../models/ticket';
 import mongoose from 'mongoose';
 
 it('fetches the order', async()=> {
+    
     //create a ticket
     const ticket = Ticket.build({
         id: mongoose.Types.ObjectId().toHexString(),
