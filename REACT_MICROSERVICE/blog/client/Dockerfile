@@ -1,4 +1,4 @@
-FROM node:alpine
+FROM node:23.11.1-alpine3.21
 
 # https://github.com/facebook/create-react-app/issues/8688
 ENV CI=true
